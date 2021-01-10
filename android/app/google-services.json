@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "611451089807",
+    "project_id": "controlsportapp",
+    "storage_bucket": "controlsportapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611451089807:android:ce7cf0f2336132467011fa",
+        "android_client_info": {
+          "package_name": "br.com.controlSport.controlsport_app_ecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611451089807-2jsngji4us0sd3m1nk238raj673gg6jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCszMU2oUyD37H9CQhFsAhrRwUl0_EsP3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611451089807-2jsngji4us0sd3m1nk238raj673gg6jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
