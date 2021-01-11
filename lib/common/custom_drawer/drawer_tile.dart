@@ -1,4 +1,6 @@
+import 'package:controlsport_app_ecommerce/models/page_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DrawerTile extends StatelessWidget {
   final IconData iconData;
@@ -13,7 +15,7 @@ class DrawerTile extends StatelessWidget {
       // utilizar o ontap no InKell
 
       onTap: () {
-        print('tokei');
+        context.read<PageManager>().alterarPagina(page); // set page
       },
       child: SizedBox(
         // utiliza altura para espaçar os itens ...
