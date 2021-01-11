@@ -32,6 +32,7 @@ dependencies:
   firebase_auth: ^0.18.4+1
   firebase_storage: ^5.2.0
   firebase_core: ^0.5.3
+  font_awesome_flutter: ^8.11.0 # icones 
 
 dev_dependencies:
   flutter_test:
