@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
+  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +29,7 @@ class LoginScreen extends StatelessWidget {
 
               // Form Field Email
               TextFormField(
+                style: style,
                 decoration: InputDecoration(
                   hintText: 'Informe o e-mail',
                   contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
@@ -44,6 +47,8 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(height: 16),
               // form field senha
               TextFormField(
+                style: style,
+
                 decoration: InputDecoration(
                   hintText: 'Senha',
                   contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
