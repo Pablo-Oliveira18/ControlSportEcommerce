@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sign_button/sign_button.dart';
 
 class LoginScreen extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
@@ -7,7 +8,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Entrar'),
+        title: Text('Sport\'s Control'),
         centerTitle: true,
       ),
       body: Center(
@@ -66,7 +67,7 @@ class LoginScreen extends StatelessWidget {
                   }
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 7),
 
               Align(
                 alignment: Alignment.centerRight,
@@ -81,6 +82,9 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: 44,
                 child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
                   onPressed: () {},
                   color: Theme.of(context).primaryColor,
                   textColor: Colors.white,
@@ -88,6 +92,38 @@ class LoginScreen extends StatelessWidget {
                     'Entra',
                     style: TextStyle(fontSize: 18),
                   ),
+                ),
+              ),
+
+              // botaão login Google
+              SizedBox(height: 10),
+              SizedBox(
+                height: 44,
+                child: SignInButton(
+                    buttonType: ButtonType.google,
+                    onPressed: () {
+                      print('click');
+                    }),
+              ),
+
+              // botão login git
+              SizedBox(height: 10),
+              SizedBox(
+                height: 44,
+                child: SignInButton(
+                    buttonType: ButtonType.github,
+                    onPressed: () {
+                      print('click');
+                    }),
+              ),
+              // ainda n tem conta?
+
+              new Align(
+                alignment: Alignment.center,
+                child: FlatButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {},
+                  child: const Text('Não possui uma conta? Cadastre-se'),
                 ),
               ),
             ],
