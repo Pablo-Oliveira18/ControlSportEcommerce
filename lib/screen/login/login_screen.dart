@@ -85,7 +85,7 @@ class LoginScreen extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                   textColor: Colors.white,
                   child: const Text(
-                    'Entrar',
+                    'Entra',
                     style: TextStyle(fontSize: 18),
                   ),
                 ),
