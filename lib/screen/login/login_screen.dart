@@ -1,12 +1,26 @@
+import 'package:controlsport_app_ecommerce/helpers/validator.dart';
+import 'package:controlsport_app_ecommerce/models/usuarios/user.dart';
+import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:sign_button/sign_button.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
+  final GlobalKey<FormState> formkey =
+      GlobalKey<FormState>(); // key do formulario
+
+  final GlobalKey<ScaffoldState> scaffoldKey =
+      GlobalKey<ScaffoldState>(); // key Scaffold
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController senhaController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text('Sport\'s Control'),
         centerTitle: true,
@@ -14,119 +28,145 @@ class LoginScreen extends StatelessWidget {
       body: Center(
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 16),
-          child: ListView(
-            padding: EdgeInsets.all(16),
-            shrinkWrap: true,
-            children: <Widget>[
-              SizedBox(
-                height: 120.0,
-                child: Image.asset(
-                  "assets/logo.png",
-                  fit: BoxFit.contain,
-                ),
-              ),
-
-              SizedBox(height: 20),
-
-              // Form Field Email
-              TextFormField(
-                style: style,
-                decoration: InputDecoration(
-                  hintText: 'Informe o e-mail',
-                  contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32),
+          child: Form(
+            key: formkey,
+            child: ListView(
+              padding: EdgeInsets.all(16),
+              shrinkWrap: true,
+              children: <Widget>[
+                SizedBox(
+                  height: 120.0,
+                  child: Image.asset(
+                    "assets/logo.png",
+                    fit: BoxFit.contain,
                   ),
                 ),
-                keyboardType: TextInputType.emailAddress,
-                autocorrect: false, // não corrige o que digitou
-                validator: (email) {
-                  return null;
-                },
-              ),
 
-              const SizedBox(height: 16),
-              // form field senha
-              TextFormField(
-                style: style,
+                SizedBox(height: 20),
 
-                decoration: InputDecoration(
-                  hintText: 'Senha',
-                  contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32),
+                // Form Field Email
+                TextFormField(
+                  controller: emailController,
+                  style: style,
+                  decoration: InputDecoration(
+                    hintText: 'Informe o e-mail',
+                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  autocorrect: false, // não corrige o que digitou
+                  validator: (email) {
+                    if (!emailValid(email)) {
+                      return 'Email invalido';
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+
+                const SizedBox(height: 16),
+                // form field senha
+                TextFormField(
+                  controller: senhaController,
+                  style: style,
+                  decoration: InputDecoration(
+                    hintText: 'Senha',
+                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                  ),
+                  autocorrect: false, // não corrige o q digitou
+                  obscureText: true,
+                  validator: (senha) {
+                    if (senha.isEmpty || senha.length < 6) {
+                      return 'Senha inválida';
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+                const SizedBox(height: 7),
+
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: FlatButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {},
+                    child: const Text('Esqueci minha senha'),
                   ),
                 ),
-                autocorrect: false, // não corrige o q digitou
-                obscureText: true,
-                validator: (senha) {
-                  if (senha.isEmpty || senha.length < 6) {
-                    return 'Senha inválida';
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-              const SizedBox(height: 7),
 
-              Align(
-                alignment: Alignment.centerRight,
-                child: FlatButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {},
-                  child: const Text('Esqueci minha senha'),
-                ),
-              ),
-
-              // botão entrar
-              SizedBox(
-                height: 44,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  onPressed: () {},
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
-                  child: const Text(
-                    'Entrar',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-
-              // botaão login Google
-              SizedBox(height: 10),
-              SizedBox(
-                height: 44,
-                child: SignInButton(
-                    buttonType: ButtonType.google,
+                // botão entrar
+                SizedBox(
+                  height: 44,
+                  child: RaisedButton(
                     onPressed: () {
-                      print('click');
-                    }),
-              ),
-
-              // botão login git
-              SizedBox(height: 10),
-              SizedBox(
-                height: 44,
-                child: SignInButton(
-                    buttonType: ButtonType.github,
-                    onPressed: () {
-                      print('click');
-                    }),
-              ),
-              // ainda n tem conta?
-
-              new Align(
-                alignment: Alignment.center,
-                child: FlatButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {},
-                  child: const Text('Não possui uma conta? Cadastre-se'),
+                      if (formkey.currentState.validate()) {
+                        context.read<UserManager>().fazerLogin(
+                              usuario: Usuario(
+                                  email: emailController.text,
+                                  senha: senhaController.text),
+                              onFail: (e) {
+                                SnackBar(
+                                  content: Text('Falha ao entrar: $e'),
+                                  backgroundColor: Colors.red,
+                                );
+                              },
+                              onSuccess: () {
+                                // TODO: Fechar tela de login
+                              },
+                            );
+                      } else {}
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    child: const Text(
+                      'Entrar',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+
+                // botaão login Google
+                SizedBox(height: 10),
+                SizedBox(
+                  height: 44,
+                  child: SignInButton(
+                      btnText: 'Entrar com o Google',
+                      buttonType: ButtonType.google,
+                      onPressed: () {
+                        print('click');
+                      }),
+                ),
+
+                // botão login git
+                SizedBox(height: 10),
+                SizedBox(
+                  height: 44,
+                  child: SignInButton(
+                      buttonType: ButtonType.github,
+                      onPressed: () {
+                        print('click');
+                      }),
+                ),
+                // ainda n tem conta?
+
+                new Align(
+                  alignment: Alignment.center,
+                  child: FlatButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {},
+                    child: const Text('Não possui uma conta? Cadastre-se'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
