@@ -1,5 +1,6 @@
 import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
 import 'package:controlsport_app_ecommerce/screen/base/base_screen.dart';
+import 'package:controlsport_app_ecommerce/screen/login/cadastroUsuario_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         debugShowCheckedModeBanner: false,
-        home: BaseScreen(),
+        home: CadastroUsuario(),
       ),
     );
   }
