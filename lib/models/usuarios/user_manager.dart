@@ -21,8 +21,8 @@ class UserManager {
         email: usuario.email,
         password: usuario.senha,
       );
-    } on PlatformException catch (e) {
+    } on FirebaseAuthException catch (e, s) {
       onFail(getErrorString(e.code));
-    }
+    } on Exception catch (e, s) {}
   }
 }

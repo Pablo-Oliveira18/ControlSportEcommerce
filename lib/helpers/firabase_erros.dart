@@ -18,6 +18,10 @@ String getErrorString(String code) {
       return 'Muitas solicitações. Tente novamente mais tarde.';
     case 'ERROR_OPERATION_NOT_ALLOWED':
       return 'Operação não permitida.';
+    case 'user-not-found':
+      return 'Senha ou e-mail incorretos';
+    case 'wrong-password':
+      return 'Senha ou e-mail incorretos';
 
     default:
       return 'Um erro indefinido ocorreu.';
