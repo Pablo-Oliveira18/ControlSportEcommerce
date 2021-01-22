@@ -33,7 +33,7 @@ dependencies:
   firebase_storage: ^7.0.0
   firebase_core: ^0.7.0
   font_awesome_flutter: ^8.11.0 # icones 
-  provider: ^4.3.2+3
+  provider: ^4.3.3
   sign_button: ^1.0.1
 
 dev_dependencies:
