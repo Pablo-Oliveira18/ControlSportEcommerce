@@ -6,7 +6,7 @@ import 'package:sign_button/sign_button.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
 
   final GlobalKey<FormState> formkey =
       GlobalKey<FormState>(); // key do formulario
