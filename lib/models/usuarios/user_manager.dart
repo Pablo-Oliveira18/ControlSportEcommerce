@@ -4,10 +4,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserManager extends ChangeNotifier {
+  UserManager() {
+    _loadCurrentUser(); //loadCorrentUser
+  }
+
   // config FIREBASE
   final FirebaseAuth auth = FirebaseAuth.instance;
 
-  bool loading = false;
+  User userAtual;
+
+  bool _loading = false;
 
   ///
   ////sigin
@@ -20,21 +26,31 @@ class UserManager extends ChangeNotifier {
         email: usuario.email,
         password: usuario.senha,
       );
+      userAtual = result.user;
       onSuccess();
-      await Future.delayed(Duration(seconds: 5));
     } on FirebaseAuthException catch (e, s) {
       onFail(getErrorString(e.code));
     } on Exception catch (e, s) {}
     setLoading(false);
   }
 
+  // Pegar a sessão e fazer que o usuario não precise logar toda hora
+
+  Future<void> _loadCurrentUser() async {
+    final User currentUser = await auth.currentUser;
+    if (currentUser != null) {
+      userAtual = currentUser;
+      print(userAtual.uid);
+    }
+    notifyListeners();
+  }
+
   void setLoading(bool value) {
-    print(' o valor q esta aq eé o $value');
-    loading = value;
+    _loading = value;
     notifyListeners();
   }
 
   bool getLoading() {
-    return loading;
+    return _loading;
   }
 }

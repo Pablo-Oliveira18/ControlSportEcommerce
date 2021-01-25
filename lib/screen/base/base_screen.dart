@@ -20,9 +20,7 @@ class BaseScreen extends StatelessWidget {
 
         children: <Widget>[
           // App bar tela,
-
           LoginScreen(),
-
           Scaffold(
             drawer: CustomDrawer(),
             appBar: AppBar(

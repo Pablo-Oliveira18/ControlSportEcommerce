@@ -50,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                       // Form Field Email
                       TextFormField(
                         controller: emailController,
-                        enabled: !userManager.loading,
+                        enabled: !userManager.getLoading(),
                         style: style,
                         decoration: InputDecoration(
                           hintText: 'Informe o e-mail',
@@ -74,7 +74,8 @@ class LoginScreen extends StatelessWidget {
                       // form field senha
                       TextFormField(
                         controller: senhaController,
-                        enabled: !userManager.loading,
+                        enabled: !userManager.getLoading(),
+
                         style: style,
                         decoration: InputDecoration(
                           hintText: 'Senha',
@@ -108,7 +109,7 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(
                         height: 44,
                         child: RaisedButton(
-                          onPressed: userManager.loading
+                          onPressed: userManager.getLoading()
                               ? null
                               : () {
                                   if (formkey.currentState.validate()) {
@@ -134,10 +135,17 @@ class LoginScreen extends StatelessWidget {
                           ),
                           color: Theme.of(context).primaryColor,
                           textColor: Colors.white,
-                          child: const Text(
-                            'Entrar',
-                            style: TextStyle(fontSize: 18),
-                          ),
+                          disabledColor:
+                              Theme.of(context).primaryColor.withAlpha(100),
+                          child: userManager.getLoading()
+                              ? CircularProgressIndicator(
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.white),
+                                )
+                              : const Text(
+                                  'Entrar',
+                                  style: TextStyle(fontSize: 18),
+                                ),
                         ),
                       ),
 
@@ -169,7 +177,10 @@ class LoginScreen extends StatelessWidget {
                         alignment: Alignment.center,
                         child: FlatButton(
                           padding: EdgeInsets.zero,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed('/cadastro');
+                          },
                           child:
                               const Text('Não possui uma conta? Cadastre-se'),
                         ),

@@ -1,6 +1,7 @@
 import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
 import 'package:controlsport_app_ecommerce/screen/base/base_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/login/login_screen.dart';
+import 'package:controlsport_app_ecommerce/screen/signup(Cadastro)/cadastro_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,14 +20,23 @@ class MyApp extends StatelessWidget {
       create: (_) => UserManager(),
       child: MaterialApp(
         title: 'Sport Control',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: const Color.fromARGB(255, 4, 125, 141),
           scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
           appBarTheme: const AppBarTheme(elevation: 0),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        debugShowCheckedModeBanner: false,
-        home: LoginScreen(),
+        initialRoute: '/base',
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case '/cadastro':
+              return MaterialPageRoute(builder: (_) => CadastroUserScreen());
+            case '/base':
+            default:
+              return MaterialPageRoute(builder: (_) => BaseScreen());
+          }
+        },
       ),
     );
   }
