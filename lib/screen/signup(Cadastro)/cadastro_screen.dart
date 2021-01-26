@@ -1,12 +1,13 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:controlsport_app_ecommerce/helpers/validator.dart';
 import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
+import 'package:cpfcnpj/cpfcnpj.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class CadastroUserScreen extends StatelessWidget {
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
+  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 12.0);
 
   final GlobalKey<FormState> formkey =
       GlobalKey<FormState>(); // key do formulario
@@ -82,15 +83,24 @@ class CadastroUserScreen extends StatelessWidget {
                         style: style,
                         decoration: InputDecoration(
                           hintText: 'Celular, EX: (37) 99822-4567',
-                          prefixIcon: Icon(Icons.quick_contacts_mail),
+                          prefixIcon: Icon(Icons.phone),
                           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(32),
                           ),
                         ),
                         autocorrect: false, // não corrige o que digitou
-                        validator: (cpf) {
-                          if (cpf.isEmpty) return 'Campo obrigatorio';
+                        validator: (cel) {
+                          if (cel.isEmpty)
+                            return 'Campo obrigatorio';
+                          else if (cel.length < 15)
+                            return ('Preencha o campo todo');
+                          else
+                            return null;
+                        },
+
+                        onSaved: (cel) {
+                          print(cel);
                         },
                       ),
 
@@ -114,7 +124,14 @@ class CadastroUserScreen extends StatelessWidget {
                         ),
                         autocorrect: false, // não corrige o que digitou
                         validator: (cpf) {
-                          if (cpf.isEmpty) return 'Campo obrigatorio';
+                          if (cpf.isEmpty)
+                            return 'Campo obrigatorio';
+                          else if (cpf.length < 14)
+                            return 'Preencha todos os campos';
+                          else if (!CPF.isValid(cpf))
+                            return 'CPF invalido';
+                          else
+                            return null;
                         },
                       ),
 
@@ -201,7 +218,8 @@ class CadastroUserScreen extends StatelessWidget {
                         height: 44,
                         child: RaisedButton(
                           onPressed: () {
-                            formkey.currentState.validate();
+                            if (formkey.currentState.validate())
+                              formkey.currentState.save();
                           },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0),
