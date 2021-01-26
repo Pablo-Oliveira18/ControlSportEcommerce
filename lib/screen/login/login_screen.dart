@@ -53,6 +53,7 @@ class LoginScreen extends StatelessWidget {
                         enabled: !userManager.getLoading(),
                         style: style,
                         decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.mail),
                           hintText: 'Informe o e-mail',
                           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                           border: OutlineInputBorder(
@@ -78,6 +79,7 @@ class LoginScreen extends StatelessWidget {
 
                         style: style,
                         decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.vpn_key),
                           hintText: 'Senha',
                           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                           border: OutlineInputBorder(

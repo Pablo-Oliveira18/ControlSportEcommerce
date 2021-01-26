@@ -1,6 +1,8 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:controlsport_app_ecommerce/helpers/validator.dart';
 import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class CadastroUserScreen extends StatelessWidget {
@@ -24,16 +26,14 @@ class CadastroUserScreen extends StatelessWidget {
       ),
       body: Center(
         child: Card(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
+          margin: const EdgeInsets.symmetric(horizontal: 13),
           child: Form(
               key: formkey,
               child: Consumer<UserManager>(
                 child: CircleAvatar(
-                  radius: 56,
+                  radius: 40,
                   child: ClipOval(
-                    child: Image.network(
-                      'https://le18bcn.com/wp-content/uploads/2017/06/user-150x150.png',
-                    ),
+                    child: Image.asset('assets/user.png'),
                   ),
                 ),
                 builder: (_, userManager, child) {
@@ -43,25 +43,82 @@ class CadastroUserScreen extends StatelessWidget {
                     children: <Widget>[
                       child,
 
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
                       //for Field Nome
 
                       TextFormField(
-                        controller: emailController,
                         enabled: !userManager.getLoading(),
+                        textCapitalization: TextCapitalization.characters,
                         style: style,
                         decoration: InputDecoration(
                           hintText: 'Nome Completo',
+                          prefixIcon: Icon(Icons.person),
                           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(32),
                           ),
                         ),
                         autocorrect: false, // não corrige o que digitou
+                        validator: (nome) {
+                          if (nome.isEmpty)
+                            return 'Campo obrigatorio';
+                          else if (nome.trim().split(' ').length <= 1)
+                            return 'Preencha seu nome completo';
+                          else
+                            return null;
+                        },
                       ),
 
-                      SizedBox(height: 16),
+                      const SizedBox(height: 12),
+
+                      TextFormField(
+                        enabled: !userManager.getLoading(),
+                        textCapitalization: TextCapitalization.characters,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          TelefoneInputFormatter(),
+                        ],
+                        style: style,
+                        decoration: InputDecoration(
+                          hintText: 'Celular, EX: (37) 99822-4567',
+                          prefixIcon: Icon(Icons.quick_contacts_mail),
+                          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(32),
+                          ),
+                        ),
+                        autocorrect: false, // não corrige o que digitou
+                        validator: (cpf) {
+                          if (cpf.isEmpty) return 'Campo obrigatorio';
+                        },
+                      ),
+
+                      const SizedBox(height: 12),
+
+                      TextFormField(
+                        enabled: !userManager.getLoading(),
+                        textCapitalization: TextCapitalization.characters,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          CpfInputFormatter(),
+                        ],
+                        style: style,
+                        decoration: InputDecoration(
+                          hintText: 'CPF, EX: 000.000.000-00',
+                          prefixIcon: Icon(Icons.quick_contacts_mail),
+                          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(32),
+                          ),
+                        ),
+                        autocorrect: false, // não corrige o que digitou
+                        validator: (cpf) {
+                          if (cpf.isEmpty) return 'Campo obrigatorio';
+                        },
+                      ),
+
+                      const SizedBox(height: 12),
 
                       // Form Field Email
                       TextFormField(
@@ -70,6 +127,7 @@ class CadastroUserScreen extends StatelessWidget {
                         style: style,
                         decoration: InputDecoration(
                           hintText: 'Informe o e-mail',
+                          prefixIcon: Icon(Icons.mail),
                           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(32),
@@ -78,37 +136,50 @@ class CadastroUserScreen extends StatelessWidget {
                         keyboardType: TextInputType.emailAddress,
                         autocorrect: false, // não corrige o que digitou
                         validator: (email) {
-                          if (!emailValid(email)) {
+                          if (email.isEmpty)
+                            return 'Campo obrigatório';
+                          else if (!emailValid(email))
                             return 'Email invalido';
-                          } else {
+                          else
                             return null;
-                          }
                         },
                       ),
 
+                      const SizedBox(height: 12),
+
+                      // form field senha
                       TextFormField(
-                        controller: emailController,
+                        controller: senhaController,
                         enabled: !userManager.getLoading(),
                         style: style,
                         decoration: InputDecoration(
-                          hintText: 'Informe o e-mail',
+                          hintText: 'Senha',
+                          prefixIcon: Icon(Icons.vpn_key),
                           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(32),
                           ),
                         ),
-                        autocorrect: false, // não corrige o que digitou
+                        autocorrect: false, // não corrige o q digitou
+                        obscureText: true,
+                        validator: (senha) {
+                          if (senha.isEmpty)
+                            return 'Senha não pode ser vazio';
+                          else if (senha.length < 6)
+                            return 'Senha muito curta';
+                          else
+                            return null;
+                        },
                       ),
+                      const SizedBox(height: 12),
 
-                      const SizedBox(height: 16),
-                      // form field senha
                       TextFormField(
                         controller: senhaController,
                         enabled: !userManager.getLoading(),
-
                         style: style,
                         decoration: InputDecoration(
-                          hintText: 'Senha',
+                          prefixIcon: Icon(Icons.vpn_key),
+                          hintText: 'Repita sua senha',
                           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(32),
@@ -124,7 +195,32 @@ class CadastroUserScreen extends StatelessWidget {
                           }
                         },
                       ),
-                      const SizedBox(height: 7),
+                      const SizedBox(height: 15),
+
+                      SizedBox(
+                        height: 44,
+                        child: RaisedButton(
+                          onPressed: () {
+                            formkey.currentState.validate();
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          color: Theme.of(context).primaryColor,
+                          textColor: Colors.white,
+                          disabledColor:
+                              Theme.of(context).primaryColor.withAlpha(100),
+                          child: userManager.getLoading()
+                              ? CircularProgressIndicator(
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.white),
+                                )
+                              : const Text(
+                                  'Criar Conta',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                        ),
+                      ),
                     ],
                   );
                 },
