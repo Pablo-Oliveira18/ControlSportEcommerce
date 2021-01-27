@@ -2,6 +2,7 @@ import 'package:controlsport_app_ecommerce/helpers/firabase_erros.dart';
 import 'package:controlsport_app_ecommerce/models/usuarios/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 class UserManager extends ChangeNotifier {
   UserManager() {
@@ -34,8 +35,24 @@ class UserManager extends ChangeNotifier {
     setLoading(false);
   }
 
-  // Pegar a sessão e fazer que o usuario não precise logar toda hora
+  // SIGIN
+  Future<void> cadastrarUser(
+      {Usuario usuario, Function onFail, Function onSuccess}) async {
+    setLoading(true);
+    try {
+      final UserCredential result = await auth.createUserWithEmailAndPassword(
+          email: usuario.email, password: usuario.senha);
 
+      userAtual = result.user;
+
+      onSuccess();
+    } on PlatformException catch (e, s) {
+      onFail(getErrorString(e.code));
+    } on Exception catch (e, s) {}
+    setLoading(false);
+  }
+
+  // Pegar a sessão e fazer que o usuario não precise logar toda hora
   Future<void> _loadCurrentUser() async {
     final User currentUser = await auth.currentUser;
     if (currentUser != null) {

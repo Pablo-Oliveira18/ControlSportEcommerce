@@ -1,6 +1,14 @@
 class Usuario {
-  Usuario({this.email, this.senha});
+  String email = "";
+  String senha = "";
+  String nomeCompleto = "";
+  String cpf = "";
+  String telefone = "";
+  String confirmarSenha = "";
 
-  String email;
-  String senha;
+  Usuario({this.email, this.senha, this.nomeCompleto, this.cpf, this.telefone});
+
+  String getNomeCompleto() {
+    return nomeCompleto;
+  }
 }
