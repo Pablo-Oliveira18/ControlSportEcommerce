@@ -262,7 +262,8 @@ class CadastroUserScreen extends StatelessWidget {
                                   );
                                 },
                                 onSuccess: () {
-                                  //todo logar
+                                  debugPrint('sucesso');
+                                  //TODO: POP
                                 });
                           }
                         },

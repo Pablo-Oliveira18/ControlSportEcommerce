@@ -35,7 +35,7 @@ class UserManager extends ChangeNotifier {
     setLoading(false);
   }
 
-  // SIGIN
+  // signUP
   Future<void> cadastrarUser(
       {Usuario usuario, Function onFail, Function onSuccess}) async {
     setLoading(true);
@@ -44,6 +44,9 @@ class UserManager extends ChangeNotifier {
           email: usuario.email, password: usuario.senha);
 
       userAtual = result.user;
+      usuario.id = result.user.uid;
+
+      usuario.saveData();
 
       onSuccess();
     } on PlatformException catch (e, s) {
