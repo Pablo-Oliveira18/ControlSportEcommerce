@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:controlsport_app_ecommerce/helpers/firabase_erros.dart';
 import 'package:controlsport_app_ecommerce/models/usuarios/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +12,9 @@ class UserManager extends ChangeNotifier {
 
   // config FIREBASE
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Usuario usuario;
 
   User userAtual;
 
@@ -27,7 +31,7 @@ class UserManager extends ChangeNotifier {
         email: usuario.email,
         password: usuario.senha,
       );
-      userAtual = result.user;
+      await _loadCurrentUser(firebaseUser: result.user);
       onSuccess();
     } on FirebaseAuthException catch (e, s) {
       onFail(getErrorString(e.code));
@@ -43,10 +47,10 @@ class UserManager extends ChangeNotifier {
       final UserCredential result = await auth.createUserWithEmailAndPassword(
           email: usuario.email, password: usuario.senha);
 
-      userAtual = result.user;
       usuario.id = result.user.uid;
+      this.usuario = usuario;
 
-      usuario.saveData();
+      await usuario.saveData();
 
       onSuccess();
     } on PlatformException catch (e, s) {
@@ -56,13 +60,15 @@ class UserManager extends ChangeNotifier {
   }
 
   // Pegar a sessão e fazer que o usuario não precise logar toda hora
-  Future<void> _loadCurrentUser() async {
-    final User currentUser = await auth.currentUser;
+  Future<void> _loadCurrentUser({User firebaseUser}) async {
+    final User currentUser = firebaseUser ?? await auth.currentUser;
     if (currentUser != null) {
-      userAtual = currentUser;
-      print(userAtual.uid);
+      final DocumentSnapshot docUser =
+          await firestore.collection('users').doc(currentUser.uid).get();
+      usuario = Usuario.fromDocument(docUser);
+      print(usuario.nomeCompleto);
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   void setLoading(bool value) {

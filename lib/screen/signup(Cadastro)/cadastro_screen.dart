@@ -53,6 +53,7 @@ class CadastroUserScreen extends StatelessWidget {
                     // ************** FIELD NOME ************\\\\\\\\\\\
                     TextFormField(
                       enabled: !userManager.getLoading(),
+
                       style: style,
                       decoration: InputDecoration(
                         hintText: 'Nome Completo',
@@ -82,6 +83,7 @@ class CadastroUserScreen extends StatelessWidget {
                     // ************** FIELD Celular ************\\\\\\\\\\\
                     TextFormField(
                       enabled: !userManager.getLoading(),
+                      keyboardType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                         TelefoneInputFormatter(),
@@ -106,7 +108,7 @@ class CadastroUserScreen extends StatelessWidget {
                       },
 
                       onSaved: (cel) {
-                        print(cel);
+                        usuario.telefone = cel;
                       },
                     ),
                     // ************** FIELD Celular ************\\\\\\\\\\\
@@ -116,6 +118,8 @@ class CadastroUserScreen extends StatelessWidget {
                     // ************** FIELD CPF ************\\\\\\\\\\\
                     TextFormField(
                       enabled: !userManager.getLoading(),
+                      keyboardType: TextInputType.number,
+
                       textCapitalization: TextCapitalization.characters,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
@@ -140,6 +144,9 @@ class CadastroUserScreen extends StatelessWidget {
                           return 'CPF invalido';
                         else
                           return null;
+                      },
+                      onSaved: (cpf) {
+                        usuario.cpf = cpf;
                       },
                     ),
                     // ************** FIELD CPF ************\\\\\\\\\\\
