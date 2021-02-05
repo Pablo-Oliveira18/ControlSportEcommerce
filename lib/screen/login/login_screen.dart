@@ -127,7 +127,7 @@ class LoginScreen extends StatelessWidget {
                                         ));
                                       },
                                       onSuccess: () {
-                                        // TODO: Fechar tela de login
+                                        Navigator.of(context).pop();
                                       },
                                     );
                                   }
@@ -168,10 +168,7 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(
                         height: 44,
                         child: SignInButton(
-                            buttonType: ButtonType.github,
-                            onPressed: () {
-                              print('click');
-                            }),
+                            buttonType: ButtonType.github, onPressed: () {}),
                       ),
                       // ainda n tem conta?
 

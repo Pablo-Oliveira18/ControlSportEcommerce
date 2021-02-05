@@ -8,13 +8,22 @@ class Usuario {
   String telefone = "";
   String confirmarSenha = "";
   String id = "";
+  String sexo = "";
 
-  Usuario({this.email, this.senha, this.nomeCompleto, this.cpf, this.telefone});
+  Usuario({
+    this.email,
+    this.senha,
+    this.nomeCompleto,
+    this.cpf,
+    this.telefone,
+    this.sexo,
+  });
 
   Usuario.fromDocument(DocumentSnapshot document) {
     id = document.id;
     nomeCompleto = document.data()['name'] as String;
     email = document.data()['email'] as String;
+    sexo = document.data()['sexo'] as String;
   }
 
   DocumentReference get firestoreRef =>
@@ -34,6 +43,7 @@ class Usuario {
       'email': email,
       'cpf': cpf,
       'telefone': telefone,
+      'sexo': sexo,
     };
   }
 

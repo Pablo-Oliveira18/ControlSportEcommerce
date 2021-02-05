@@ -37,6 +37,7 @@ dependencies:
   sign_button: ^1.0.1
   brasil_fields: ^0.6.1
   cpfcnpj: ^1.0.3 # validar CPF E CNPJ
+  dropdown_formfield: ^0.1.3
 
 dev_dependencies:
   flutter_test:

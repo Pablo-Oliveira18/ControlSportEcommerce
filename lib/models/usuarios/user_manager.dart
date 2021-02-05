@@ -20,6 +20,8 @@ class UserManager extends ChangeNotifier {
 
   bool _loading = false;
 
+  bool get isLoggedIn => usuario != null;
+
   ///
   ////sigin
   Future<void> fazerLogin(
@@ -69,6 +71,13 @@ class UserManager extends ChangeNotifier {
       print(usuario.nomeCompleto);
       notifyListeners();
     }
+  }
+
+  // sair
+  Future<void> signOut() {
+    auth.signOut();
+    usuario = null;
+    notifyListeners();
   }
 
   void setLoading(bool value) {

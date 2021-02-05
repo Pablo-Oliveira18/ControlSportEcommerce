@@ -1,3 +1,4 @@
+import 'package:controlsport_app_ecommerce/common/custom_drawer/custom_drawer_header.dart';
 import 'package:controlsport_app_ecommerce/common/custom_drawer/drawer_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,6 +10,8 @@ class CustomDrawer extends StatelessWidget {
       child: Drawer(
         child: ListView(
           children: <Widget>[
+            CustomDrawerHeader(),
+
             // Drawer HOME
             DrawerTile(
               iconData: Icons.home,
