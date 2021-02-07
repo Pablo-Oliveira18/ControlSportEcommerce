@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
         title: 'Sport Control',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: const Color.fromARGB(255, 4, 125, 141),
-          scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
+          primaryColor: const Color.fromARGB(255, 241, 183, 83),
+          scaffoldBackgroundColor: const Color.fromARGB(255, 217, 129, 23),
           appBarTheme: const AppBarTheme(elevation: 0),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),

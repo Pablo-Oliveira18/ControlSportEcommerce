@@ -61,7 +61,6 @@ class _CadastroUserScreenState extends State<CadastroUserScreen> {
                     // ************** FIELD NOME ************\\\\\\\\\\\
                     TextFormField(
                       enabled: !userManager.getLoading(),
-
                       style: style,
                       decoration: InputDecoration(
                         hintText: 'Nome Completo',
@@ -234,11 +233,13 @@ class _CadastroUserScreenState extends State<CadastroUserScreen> {
                       value: dropdownValue,
                       hint: Text("Informe o sexo"),
                       icon: Icon(Icons.arrow_downward),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          dropdownValue = newValue;
-                        });
-                      },
+                      onChanged: userManager.getLoading()
+                          ? null
+                          : (String newValue) {
+                              setState(() {
+                                dropdownValue = newValue;
+                              });
+                            },
                       onSaved: (value) {
                         setState(() {
                           usuario.sexo = value;
@@ -353,33 +354,37 @@ class _CadastroUserScreenState extends State<CadastroUserScreen> {
                     SizedBox(
                       height: 44,
                       child: RaisedButton(
-                        onPressed: () {
-                          if (formkey.currentState.validate()) {
-                            formkey.currentState.save();
-                            if (usuario.senha != usuario.confirmarSenha) {
-                              scaffoldKey.currentState.showSnackBar(
-                                SnackBar(
-                                  content: const Text('Senhas não conferem'),
-                                  backgroundColor: Colors.red,
-                                ),
-                              );
-                              return;
-                            }
-                            userManager.cadastrarUser(
-                                usuario: usuario,
-                                onFail: (e) {
-                                  scaffoldKey.currentState.showSnackBar(
-                                    SnackBar(
-                                      content: Text('Falha ao cadastrar: $e'),
-                                      backgroundColor: Colors.red,
-                                    ),
-                                  );
-                                },
-                                onSuccess: () {
-                                  Navigator.of(context).pop();
-                                });
-                          }
-                        },
+                        onPressed: userManager.getLoading()
+                            ? null
+                            : () {
+                                if (formkey.currentState.validate()) {
+                                  formkey.currentState.save();
+                                  if (usuario.senha != usuario.confirmarSenha) {
+                                    scaffoldKey.currentState.showSnackBar(
+                                      SnackBar(
+                                        content:
+                                            const Text('Senhas não conferem'),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
+                                    return;
+                                  }
+                                  userManager.cadastrarUser(
+                                      usuario: usuario,
+                                      onFail: (e) {
+                                        scaffoldKey.currentState.showSnackBar(
+                                          SnackBar(
+                                            content:
+                                                Text('Falha ao cadastrar: $e'),
+                                            backgroundColor: Colors.red,
+                                          ),
+                                        );
+                                      },
+                                      onSuccess: () {
+                                        Navigator.of(context).pop();
+                                      });
+                                }
+                              },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
