@@ -11,24 +11,71 @@ class ProdutsScreen extends StatelessWidget {
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(
-        actions: [
-          IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                showDialog(context: context, builder: (_) => SearchDialog());
-              }),
-        ],
-        title: const Text('Produtos'),
+        title: Consumer<ProductManager>(builder: (_, productManager, __) {
+          if (productManager.search.isEmpty) {
+            return const Text('Produtos');
+          } else {
+            return LayoutBuilder(
+              builder: (_, constranints) {
+                return GestureDetector(
+                  onTap: () async {
+                    final search = await showDialog<String>(
+                      context: context,
+                      builder: (_) => SearchDialog(productManager.search),
+                    );
+                    if (search != null) {
+                      productManager.search = search;
+                    }
+                  },
+                  child: Container(
+                    width: constranints.biggest.width,
+                    child: Text(
+                      productManager.search,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                );
+              },
+            );
+          }
+        }),
         centerTitle: true,
+        actions: <Widget>[
+          Consumer<ProductManager>(
+            builder: (_, productManager, __) {
+              if (productManager.search.isEmpty) {
+                return IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () async {
+                    final search = await showDialog<String>(
+                      context: context,
+                      builder: (_) => SearchDialog(productManager.search),
+                    );
+                    if (search != null) {
+                      productManager.search = search;
+                    }
+                  },
+                );
+              } else {
+                return IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () async {
+                    productManager.search = '';
+                  },
+                );
+              }
+            },
+          )
+        ],
       ),
       body: Consumer<ProductManager>(
         builder: (_, productManager, __) {
+          final filteredProducts = productManager.filteredProducts;
           return ListView.builder(
             padding: const EdgeInsets.all(4),
-            itemCount:
-                productManager.allProducts.length, // tamanho da minha lista
+            itemCount: filteredProducts.length, // tamanho da minha lista
             itemBuilder: (_, index) {
-              return ProductListTile(productManager.allProducts[index]);
+              return ProductListTile(filteredProducts[index]);
             },
           );
         },
