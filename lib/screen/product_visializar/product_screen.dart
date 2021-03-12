@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:carousel_pro/carousel_pro.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:controlsport_app_ecommerce/models/products/product.dart';
 import 'package:flutter/material.dart';
 
@@ -53,6 +52,7 @@ class ProductScreen extends StatelessWidget {
                 subTitle(sub: 'Desrição'),
                 textTitle(titulo: product.description),
                 subTitle(sub: 'Marca'),
+                textTitle(titulo: product.brandy != null ? product.brandy : ''),
               ],
             ),
           )
