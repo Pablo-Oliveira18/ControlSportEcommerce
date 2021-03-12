@@ -1,7 +1,9 @@
+import 'package:controlsport_app_ecommerce/models/products/product.dart';
 import 'package:controlsport_app_ecommerce/models/products/product_manager.dart';
 import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
 import 'package:controlsport_app_ecommerce/screen/base/base_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/login/login_screen.dart';
+import 'package:controlsport_app_ecommerce/screen/product_visializar/product_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/signup(Cadastro)/cadastro_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -40,10 +42,14 @@ class MyApp extends StatelessWidget {
         initialRoute: '/base',
         onGenerateRoute: (settings) {
           switch (settings.name) {
+            case '/product':
+              return MaterialPageRoute(
+                  builder: (_) => ProductScreen(settings.arguments as Product));
             case '/login':
               return MaterialPageRoute(builder: (_) => LoginScreen());
             case '/cadastro':
               return MaterialPageRoute(builder: (_) => CadastroUserScreen());
+
             case '/base':
             default:
               return MaterialPageRoute(builder: (_) => BaseScreen());
