@@ -2,7 +2,10 @@ import 'dart:ui';
 
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:controlsport_app_ecommerce/models/products/product.dart';
+import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
+import 'package:controlsport_app_ecommerce/screen/product_visializar/components/size_widger.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductScreen extends StatelessWidget {
   const ProductScreen(this.product);
@@ -12,51 +15,104 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(product.name),
-        centerTitle: true,
-      ),
-      backgroundColor: Colors.white,
-      body: ListView(
-        children: <Widget>[
-          Card(
-            margin: const EdgeInsets.symmetric(horizontal: 6),
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: Carousel(
-                images: product.images.map(
-                  (url) {
-                    return NetworkImage(url);
-                  },
-                ).toList(),
-                dotSize: 5,
-                dotBgColor: Colors.grey[1000],
-                dotColor: primaryColor,
-                autoplay: false,
+    return ChangeNotifierProvider.value(
+      value: product,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(product.name),
+          centerTitle: true,
+        ),
+        backgroundColor: Colors.white,
+        body: ListView(
+          children: <Widget>[
+            Card(
+              margin: const EdgeInsets.symmetric(horizontal: 6),
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Carousel(
+                  images: product.images.map(
+                    (url) {
+                      return NetworkImage(url);
+                    },
+                  ).toList(),
+                  dotSize: 5,
+                  dotBgColor: Colors.grey[1000],
+                  dotColor: primaryColor,
+                  autoplay: false,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                textTitle(titulo: product.name, sizes: 20, top: 1),
-                subTitle(sub: 'A partir de', sizes: 12),
-                subTitle(
-                    sub: 'R\$ 20,99',
-                    bold: FontWeight.bold,
-                    color: primaryColor,
-                    sizes: 20),
-                subTitle(sub: 'Desrição'),
-                textTitle(titulo: product.description),
-                subTitle(sub: 'Marca'),
-                textTitle(titulo: product.brandy != null ? product.brandy : ''),
-              ],
-            ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  textTitle(titulo: product.name, sizes: 20, top: 1),
+                  subTitle(sub: 'Desrição'),
+                  textTitle(titulo: product.description),
+                  subTitle(sub: 'Marca'),
+                  textTitle(
+                      titulo: product.brandy != null
+                          ? product.brandy
+                          : 'Control Sport\'s'),
+                  subTitle(sub: 'A partir de', sizes: 12),
+                  subTitle(
+                      sub: 'R\$ 20,99',
+                      bold: FontWeight.bold,
+                      color: primaryColor,
+                      sizes: 20),
+                  subTitle(sub: 'Tamanhos'),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 7, 0, 0),
+                    child: Wrap(
+                      runSpacing: 8,
+                      spacing: 10,
+                      children: product.sizes.map((s) {
+                        return SizeWidget(size: s);
+                      }).toList(),
+                    ),
+                  ),
+                  subTitle(
+                    sub:
+                        'Todos os tamanhos disponiveis se encontra na cor cinza, e os não disponiveis na cor vermelha.',
+                    color: Colors.grey,
+                    sizes: 10,
+                  ),
+                  const SizedBox(height: 20),
+                  if (product.hasStock)
+                    Consumer2<UserManager, Product>(
+                      builder: (_, userManager, product, __) {
+                        return SizedBox(
+                          height: 44,
+                          child: RaisedButton(
+                            color: primaryColor,
+                            textColor: Colors.white,
+                            onPressed: product.selectedSize != null
+                                ? () {
+                                    if (userManager.isLoggedIn) {
+                                      //TODO: adicionar ao carrinho
+                                    } else {
+                                      Navigator.of(context).pushNamed('/login');
+                                    }
+                                  }
+                                : null,
+                            child: Text(
+                              userManager.isLoggedIn
+                                  ? 'Adicionar ao Carrinho'
+                                  : 'Entre para comprar',
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
