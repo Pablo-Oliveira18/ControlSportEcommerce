@@ -1,7 +1,9 @@
+import 'package:controlsport_app_ecommerce/models/cart(carrinho)/cart_manager.dart';
 import 'package:controlsport_app_ecommerce/models/products/product.dart';
 import 'package:controlsport_app_ecommerce/models/products/product_manager.dart';
 import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
 import 'package:controlsport_app_ecommerce/screen/base/base_screen.dart';
+import 'package:controlsport_app_ecommerce/screen/cart/cart_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/login/login_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/product_visializar/product_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/signup(Cadastro)/cadastro_screen.dart';
@@ -29,6 +31,12 @@ class MyApp extends StatelessWidget {
           create: (_) => ProductManager(),
           lazy: false,
         ),
+        ProxyProvider<UserManager, CartManager>(
+          create: (_) => CartManager(),
+          lazy: false,
+          update: (_, userManager, cartManager) =>
+              cartManager..updateUser(userManager),
+        ),
       ],
       child: MaterialApp(
         title: 'Sport Control',
@@ -49,6 +57,8 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => LoginScreen());
             case '/cadastro':
               return MaterialPageRoute(builder: (_) => CadastroUserScreen());
+            case '/cart':
+              return MaterialPageRoute(builder: (_) => CartScreen());
 
             case '/base':
             default:

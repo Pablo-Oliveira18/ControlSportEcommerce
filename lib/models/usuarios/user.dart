@@ -29,6 +29,8 @@ class Usuario {
   DocumentReference get firestoreRef =>
       FirebaseFirestore.instance.doc('users/$id');
 
+  CollectionReference get cartReference => firestoreRef.collection('cart');
+
   // salva dados do usuario no banco
   Future<void> saveData() async {
     await FirebaseFirestore.instance

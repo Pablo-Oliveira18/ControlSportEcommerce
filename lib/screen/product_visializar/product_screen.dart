@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:controlsport_app_ecommerce/models/cart(carrinho)/cart_manager.dart';
 import 'package:controlsport_app_ecommerce/models/products/product.dart';
 import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
 import 'package:controlsport_app_ecommerce/screen/product_visializar/components/size_widger.dart';
@@ -90,7 +91,10 @@ class ProductScreen extends StatelessWidget {
                             onPressed: product.selectedSize != null
                                 ? () {
                                     if (userManager.isLoggedIn) {
-                                      //TODO: adicionar ao carrinho
+                                      context
+                                          .read<CartManager>()
+                                          .addToCart(product);
+                                      Navigator.of(context).pushNamed('/cart');
                                     } else {
                                       Navigator.of(context).pushNamed('/login');
                                     }
