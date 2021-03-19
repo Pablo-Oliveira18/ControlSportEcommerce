@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:controlsport_app_ecommerce/models/itemSize/item_size.dart';
 import 'package:controlsport_app_ecommerce/models/products/product.dart';
+import 'package:flutter/cupertino.dart';
 
-class CartProduct {
+class CartProduct extends ChangeNotifier {
   CartProduct.fromProduct(this.product) {
     productId = product.id;
     quantity = 1;
@@ -36,5 +37,27 @@ class CartProduct {
   num get unitPrice {
     if (product == null) return 0;
     return itemSize?.price ?? 0;
+  }
+
+  Map<String, dynamic> toCartMap() {
+    return {
+      'pid': product.id,
+      'quantity': quantity,
+      'size': size,
+    };
+  }
+
+  bool stackable(Product product) {
+    return product.id == productId && product.selectedSize.name == size;
+  }
+
+  void increment() {
+    quantity++;
+    notifyListeners();
+  }
+
+  void decrement() {
+    quantity--;
+    notifyListeners();
   }
 }
