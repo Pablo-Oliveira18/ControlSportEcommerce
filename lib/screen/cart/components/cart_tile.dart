@@ -45,13 +45,25 @@ class CartTile extends StatelessWidget {
                               style: TextStyle(fontWeight: FontWeight.w300),
                             ),
                           ),
-                          Text(
-                            'R\$ ${cartProduct.unitPrice.toStringAsFixed(2)}',
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
+                          Consumer<CartProduct>(
+                            builder: (_, cartProduct, __) {
+                              if (cartProduct.hasStock)
+                                return Text(
+                                  'R\$ ${cartProduct.unitPrice.toStringAsFixed(2)}',
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                );
+                              else {
+                                return Text(
+                                  'Sem estoque disponivel',
+                                  style: TextStyle(
+                                      color: Colors.red, fontSize: 13),
+                                );
+                              }
+                            },
+                          )
                         ],
                       ),
                     ),
@@ -67,7 +79,9 @@ class CartTile extends StatelessWidget {
                     children: [
                       CustomIconButton(
                         iconData: Icons.remove,
-                        color: Theme.of(context).primaryColor,
+                        color: cartProduct.quantity > 1
+                            ? Theme.of(context).primaryColor
+                            : Colors.red,
                         onTap: cartProduct.decrement,
                       ),
                       Container(
