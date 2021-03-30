@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:controlsport_app_ecommerce/models/cart(carrinho)/cart_product.dart';
 import 'package:controlsport_app_ecommerce/models/products/product.dart';
@@ -61,7 +59,7 @@ class CartManager extends ChangeNotifier {
 
       _updateCartProduct(cartProduct);
     }
-    print(productsPrice);
+    notifyListeners();
   }
 
   void _updateCartProduct(CartProduct cartProduct) {
@@ -71,7 +69,7 @@ class CartManager extends ChangeNotifier {
 
   bool get isCartValid {
     for (final cartProduct in items) {
-      if (cartProduct.hasStock) return false;
+      if (!cartProduct.hasStock) return false;
     }
     return true;
   }
