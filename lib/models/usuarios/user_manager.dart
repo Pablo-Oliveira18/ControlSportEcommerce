@@ -22,6 +22,8 @@ class UserManager extends ChangeNotifier {
 
   bool get isLoggedIn => usuario != null;
 
+  bool get adminEnabled => usuario != null && usuario.admin;
+
   ///
   ////sigin
   Future<void> fazerLogin(
@@ -68,7 +70,13 @@ class UserManager extends ChangeNotifier {
       final DocumentSnapshot docUser =
           await firestore.collection('users').doc(currentUser.uid).get();
       usuario = Usuario.fromDocument(docUser);
-      print(usuario.nomeCompleto);
+
+      final docAdmin =
+          await firestore.collection('admins').doc(usuario.id).get();
+      if (docAdmin.exists) {
+        usuario.admin = true;
+      }
+
       notifyListeners();
     }
   }

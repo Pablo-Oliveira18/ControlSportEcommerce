@@ -1,6 +1,9 @@
 import 'package:controlsport_app_ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:controlsport_app_ecommerce/common/custom_drawer/custom_drawer_header.dart';
 import 'package:controlsport_app_ecommerce/models/page_manager.dart';
+import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
+import 'package:controlsport_app_ecommerce/screen/admin_users/admin_users_scrren.dart';
+import 'package:controlsport_app_ecommerce/screen/home/home_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/login/login_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/products/products_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,38 +18,38 @@ class BaseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider(
       create: (_) => PageManager(pageController),
-      child: PageView(
-        controller: pageController, // Controlador da Home Screen
-        physics:
-            const NeverScrollableScrollPhysics(), // impidir que movimente a page view através de gestos.
-
-        children: <Widget>[
-          // App bar tela,
-          Scaffold(
-            drawer: CustomDrawer(),
-            appBar: AppBar(
-              title: const Text('Sport Control'),
-            ),
-          ),
-
-          ProdutsScreen(),
-
-          Container(
-            color: Colors.red,
-            child: RaisedButton(
-              onPressed: () {
-                pageController.jumpToPage(1);
-              },
-              child: Text('Proximo'),
-            ),
-          ),
-          Container(
-            color: Colors.yellow,
-          ),
-          Container(
-            color: Colors.green,
-          ),
-        ],
+      child: Consumer<UserManager>(
+        builder: (_, userManager, __) {
+          return PageView(
+            controller: pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              HomeScreen(),
+              ProdutsScreen(),
+              Scaffold(
+                drawer: CustomDrawer(),
+                appBar: AppBar(
+                  title: const Text('Home3'),
+                ),
+              ),
+              Scaffold(
+                drawer: CustomDrawer(),
+                appBar: AppBar(
+                  title: const Text('Home4'),
+                ),
+              ),
+              if (userManager.adminEnabled) ...[
+                AdminUsersScreen(),
+                Scaffold(
+                  drawer: CustomDrawer(),
+                  appBar: AppBar(
+                    title: const Text('Pedidos'),
+                  ),
+                ),
+              ]
+            ],
+          );
+        },
       ),
     );
   }

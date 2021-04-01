@@ -1,7 +1,9 @@
 import 'package:controlsport_app_ecommerce/common/custom_drawer/custom_drawer_header.dart';
 import 'package:controlsport_app_ecommerce/common/custom_drawer/drawer_tile.dart';
+import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -54,12 +56,33 @@ class CustomDrawer extends StatelessWidget {
                   page: 3,
                 ),
 
-                /// Drawer Minha Conta
-                DrawerTile(
-                  iconData: Icons.engineering,
-                  title: 'Minha Conta',
-                  page: 4,
-                ),
+                Consumer<UserManager>(
+                  builder: (_, userManager, __) {
+                    if (userManager.adminEnabled) {
+                      return Column(
+                        children: <Widget>[
+                          const Divider(),
+
+                          /// Drawer Minha Conta
+                          DrawerTile(
+                            iconData: Icons.engineering,
+                            title: 'Usuarios',
+                            page: 4,
+                          ),
+
+                          /// Drawer Minha Conta
+                          DrawerTile(
+                            iconData: Icons.engineering,
+                            title: 'Pedidos',
+                            page: 5,
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                )
 
                 ///
                 ///

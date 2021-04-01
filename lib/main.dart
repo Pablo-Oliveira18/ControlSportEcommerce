@@ -1,4 +1,5 @@
 import 'package:controlsport_app_ecommerce/models/cart(carrinho)/cart_manager.dart';
+import 'package:controlsport_app_ecommerce/models/home/home_manager.dart';
 import 'package:controlsport_app_ecommerce/models/products/product.dart';
 import 'package:controlsport_app_ecommerce/models/products/product_manager.dart';
 import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
@@ -10,6 +11,9 @@ import 'package:controlsport_app_ecommerce/screen/signup(Cadastro)/cadastro_scre
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'models/admins/admin_users_manager.dart';
+import 'screen/edit_product/edit_product_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,12 +35,22 @@ class MyApp extends StatelessWidget {
           create: (_) => ProductManager(),
           lazy: false,
         ),
+        ChangeNotifierProvider(
+          create: (_) => HomeManager(),
+          lazy: false,
+        ),
         ChangeNotifierProxyProvider<UserManager, CartManager>(
           create: (_) => CartManager(),
           lazy: false,
           update: (_, userManager, cartManager) =>
               cartManager..updateUser(userManager),
         ),
+        ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
+          create: (_) => AdminUsersManager(),
+          lazy: false,
+          update: (_, userManager, adminUsersManager) =>
+              adminUsersManager..updateUser(userManager),
+        )
       ],
       child: MaterialApp(
         title: 'Sport Control',
@@ -59,6 +73,11 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => CadastroUserScreen());
             case '/cart':
               return MaterialPageRoute(builder: (_) => CartScreen());
+
+            case '/edit_product':
+              return MaterialPageRoute(
+                  builder: (_) =>
+                      EditProductScreen(settings.arguments as Product));
 
             case '/base':
             default:

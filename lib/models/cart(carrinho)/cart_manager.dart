@@ -69,7 +69,9 @@ class CartManager extends ChangeNotifier {
 
   bool get isCartValid {
     for (final cartProduct in items) {
-      if (!cartProduct.hasStock) return false;
+      if (!cartProduct.hasStock) {
+        return false;
+      }
     }
     return true;
   }

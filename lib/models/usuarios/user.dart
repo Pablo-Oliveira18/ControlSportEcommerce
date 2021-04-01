@@ -9,6 +9,7 @@ class Usuario {
   String confirmarSenha = "";
   String id = "";
   String sexo = "";
+  bool admin = false;
 
   Usuario({
     this.email,

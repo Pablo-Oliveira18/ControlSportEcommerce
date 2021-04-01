@@ -15,19 +15,26 @@ class PriceCard extends StatelessWidget {
     final productsPrice = cartManager.productsPrice;
 
     return Card(
+      color: Colors.amber[100],
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            const Divider(
+              color: Colors.black,
+            ),
             Text(
               'Resumo do Pedido',
-              textAlign: TextAlign.start,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                fontSize: 16,
+                fontSize: 18,
               ),
+            ),
+            const Divider(
+              color: Colors.black,
             ),
             const SizedBox(
               height: 12,
