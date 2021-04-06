@@ -25,13 +25,20 @@ class CustomDrawerHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(
-                'Control \n Sport\'s ',
-                style: new TextStyle(
-                    fontSize: 38.0,
-                    fontWeight: FontWeight.bold,
-                    foreground: Paint()..shader = linearGradient),
+              SizedBox(
+                height: 100.0,
+                child: Image.asset(
+                  "assets/logo.png",
+                  fit: BoxFit.contain,
+                ),
               ),
+              // Text(
+              //   'Control \n Sport\'s ',
+              //   style: new TextStyle(
+              //       fontSize: 38.0,
+              //       fontWeight: FontWeight.bold,
+              //       foreground: Paint()..shader = linearGradient),
+              // ),
               SizedBox(
                 height: 5,
               ),

@@ -74,12 +74,26 @@ class ProductScreen extends StatelessWidget {
                       titulo: product.brandy != null
                           ? product.brandy
                           : 'Control Sport\'s'),
-                  subTitle(sub: 'A partir de', sizes: 12),
-                  subTitle(
-                      sub: 'R\$ 20,99',
-                      bold: FontWeight.bold,
-                      color: primaryColor,
-                      sizes: 20),
+                  // subTitle(sub: 'Preço', sizes: 12),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text(
+                      'Valor',
+                      style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Card(
+                    margin: EdgeInsets.all(3),
+                    child: subTitle(
+                        sub: 'R\$ ${product.basePrice.toStringAsFixed(2)}',
+                        bold: FontWeight.bold,
+                        color: primaryColor,
+                        sizes: 20),
+                  ),
                   subTitle(sub: 'Tamanhos'),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 7, 0, 0),
