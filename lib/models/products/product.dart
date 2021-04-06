@@ -8,12 +8,13 @@ class Product extends ChangeNotifier {
     name = document['name'] as String;
     description = document['description'] as String;
     // category = document['category'] as String;
-    // brandy = document['brand'] as String;
+    brandy = document['brandy'] as String;
     images = List<String>.from(document.data()['images']
         as List<dynamic>); // transforma a lista dinamica em String
     sizes = (document.data()['sizes'] as List<dynamic> ?? [1])
         .map((s) => ItemSize.fromMap(s))
         .toList();
+    category = document['category'] as String;
   }
 
   String id;

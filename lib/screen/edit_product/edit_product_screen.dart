@@ -1,4 +1,5 @@
 import 'package:controlsport_app_ecommerce/models/products/product.dart';
+import 'package:controlsport_app_ecommerce/screen/edit_product/components/sizes_form.dart';
 import 'package:flutter/material.dart';
 
 import 'components/images_form.dart';
@@ -78,6 +79,46 @@ class EditProductScreen extends StatelessWidget {
                       return null;
                     },
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text(
+                      'Marca',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  TextFormField(
+                    initialValue: product.brandy,
+                    style: const TextStyle(fontSize: 16),
+                    decoration: const InputDecoration(
+                        hintText: 'Marca', border: InputBorder.none),
+                    maxLines: null,
+                    validator: (marc) {
+                      if (marc.isEmpty) return 'Marca não pode ser vazia';
+                      return null;
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text(
+                      'Categoria',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  TextFormField(
+                    initialValue: product.category,
+                    style: const TextStyle(fontSize: 16),
+                    decoration: const InputDecoration(
+                        hintText: 'Categoria', border: InputBorder.none),
+                    maxLines: null,
+                    validator: (category) {
+                      if (category.isEmpty)
+                        return 'Categoria não pode ser vazia';
+                      return null;
+                    },
+                  ),
+                  SizesForm(product),
                   RaisedButton(
                     onPressed: () {
                       if (formKey.currentState.validate()) {
