@@ -42,24 +42,26 @@ class EditProductScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text(
-                      'A partir de',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'R\$ ...',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: primaryColor,
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 4),
+                  //   child: Text(
+                  //     'A partir de',
+                  //     style: TextStyle(
+                  //       color: Colors.grey[600],
+                  //       fontSize: 13,
+                  //     ),
+                  //   ),
+                  // ),
+                  // Text(
+                  //   'R\$ ...',
+                  //   style: TextStyle(
+                  //     fontSize: 22,
+                  //     fontWeight: FontWeight.bold,
+                  //     color: primaryColor,
+                  //   ),
+                  // ),
+                  //
+
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: Text(
