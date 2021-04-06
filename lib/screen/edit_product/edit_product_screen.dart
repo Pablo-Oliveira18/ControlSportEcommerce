@@ -5,7 +5,11 @@ import 'package:flutter/material.dart';
 import 'components/images_form.dart';
 
 class EditProductScreen extends StatelessWidget {
-  EditProductScreen(this.product);
+  EditProductScreen(Product p)
+      : editing = p != null,
+        product = p != null ? p.clone() : Product();
+
+  final bool editing;
 
   final Product product;
 
@@ -16,7 +20,7 @@ class EditProductScreen extends StatelessWidget {
     final primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Editar Anúncio'),
+        title: Text(editing ? 'Editar Produto' : 'Criar Produto'),
         centerTitle: true,
       ),
       backgroundColor: Colors.white,
@@ -41,6 +45,7 @@ class EditProductScreen extends StatelessWidget {
                       if (name.length < 6) return 'Título muito curto';
                       return null;
                     },
+                    onSaved: (name) => product.name = name,
                   ),
                   // Padding(
                   //   padding: const EdgeInsets.only(top: 4),
@@ -80,6 +85,7 @@ class EditProductScreen extends StatelessWidget {
                       if (desc.length < 10) return 'Descrição muito curta';
                       return null;
                     },
+                    onSaved: (desc) => product.description = desc,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
@@ -99,6 +105,7 @@ class EditProductScreen extends StatelessWidget {
                       if (marc.isEmpty) return 'Marca não pode ser vazia';
                       return null;
                     },
+                    onSaved: (marc) => product.brandy = marc,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
@@ -119,15 +126,31 @@ class EditProductScreen extends StatelessWidget {
                         return 'Categoria não pode ser vazia';
                       return null;
                     },
+                    onSaved: (category) => product.category = category,
                   ),
                   SizesForm(product),
-                  RaisedButton(
-                    onPressed: () {
-                      if (formKey.currentState.validate()) {
-                        print('válido!!!');
-                      }
-                    },
-                    child: const Text('Salvar'),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: 44,
+                    child: RaisedButton(
+                      onPressed: () {
+                        if (formKey.currentState.validate()) {
+                          formKey.currentState.save();
+                          print('dataaaassf asf $product');
+
+                          product.save();
+                        }
+                      },
+                      textColor: Colors.white,
+                      color: primaryColor,
+                      disabledColor: primaryColor.withAlpha(100),
+                      child: const Text(
+                        'Salvar',
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                    ),
                   ),
                 ],
               ),

@@ -17,6 +17,31 @@ class Product extends ChangeNotifier {
     category = document['category'] as String;
   }
 
+  Product(
+      {this.id,
+      this.name,
+      this.description,
+      this.images,
+      this.sizes,
+      this.brandy,
+      this.category}) {
+    images = images ?? [];
+    sizes = sizes ?? [];
+  }
+
+  Product clone() {
+    return Product(
+      id: id,
+      name: name,
+      description: description,
+      category: category,
+      brandy: brandy,
+      images: List.from(images),
+      sizes: sizes.map((size) => size.clone()).toList(),
+    );
+  }
+
+  List<dynamic> newImages;
   String id;
   String name;
   String description;
@@ -26,6 +51,10 @@ class Product extends ChangeNotifier {
   List<ItemSize> sizes;
 
   ItemSize _selectedSize;
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  DocumentReference get firestoreRef => firestore.doc('products/$id');
 
   ItemSize get selectedSize => _selectedSize;
 
@@ -60,5 +89,36 @@ class Product extends ChangeNotifier {
     } catch (e) {
       return null;
     }
+  }
+
+  List<Map<String, dynamic>> exportSizeList() {
+    return sizes.map((size) => size.toMap()).toList();
+  }
+
+  Future<void> save() async {
+    print('cheguei aq');
+
+    final Map<String, dynamic> data = {
+      'name': name,
+      'description': description,
+      'category': category,
+      'brandy': brandy,
+      'sizes': exportSizeList(),
+    };
+
+    print('dataaaassf asf');
+
+    if (id == null) {
+      print('dataaaassf asf  $data');
+      final doc = await firestore.collection('products').add(data);
+      id = doc.id;
+    } else {
+      await firestoreRef.update(data);
+    }
+  }
+
+  @override
+  String toString() {
+    return 'Product{id: $id, name: $name, description: $description, images: $images, sizes: $sizes, newImages: $newImages}';
   }
 }
