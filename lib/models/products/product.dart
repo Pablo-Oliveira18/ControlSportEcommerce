@@ -1,12 +1,18 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:controlsport_app_ecommerce/models/itemSize/item_size.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter/cupertino.dart';
+import 'package:uuid/uuid.dart';
 
 class Product extends ChangeNotifier {
   Product.fromDocument(DocumentSnapshot document) {
     id = document.id;
-    name = document['name'] as String;
     description = document['description'] as String;
+    name = document['name'] as String;
+
     // category = document['category'] as String;
     brandy = document['brandy'] as String;
     images = List<String>.from(document.data()['images']
@@ -54,12 +60,23 @@ class Product extends ChangeNotifier {
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  final FirebaseStorage storage = FirebaseStorage.instance;
+
   DocumentReference get firestoreRef => firestore.doc('products/$id');
+
+  Reference get storageRef => storage.ref().child('products').child(id);
 
   ItemSize get selectedSize => _selectedSize;
 
   set selectedSize(ItemSize value) {
     _selectedSize = value;
+    notifyListeners();
+  }
+
+  bool _loading = false;
+  bool get loading => _loading;
+  set loading(bool value) {
+    _loading = value;
     notifyListeners();
   }
 
@@ -96,8 +113,7 @@ class Product extends ChangeNotifier {
   }
 
   Future<void> save() async {
-    print('cheguei aq');
-
+    loading = true;
     final Map<String, dynamic> data = {
       'name': name,
       'description': description,
@@ -106,15 +122,43 @@ class Product extends ChangeNotifier {
       'sizes': exportSizeList(),
     };
 
-    print('dataaaassf asf');
-
     if (id == null) {
-      print('dataaaassf asf  $data');
       final doc = await firestore.collection('products').add(data);
       id = doc.id;
     } else {
       await firestoreRef.update(data);
     }
+
+    final List<String> updateImages = [];
+
+    for (final newImage in newImages) {
+      if (images.contains(newImage)) {
+        updateImages.add(newImage as String);
+      } else {
+        final UploadTask task =
+            storageRef.child(Uuid().v1()).putFile(newImage as File);
+        final TaskSnapshot snapshot = await task;
+        final String url = await snapshot.ref.getDownloadURL();
+        updateImages.add(url);
+      }
+    }
+
+    for (final image in images) {
+      if (!newImages.contains(image)) {
+        try {
+          final ref = storage.ref(image);
+          await ref.delete();
+        } catch (e) {
+          debugPrint('Falha ao deletar $image');
+        }
+      }
+    }
+
+    await firestoreRef.update({'images': updateImages});
+
+    images = updateImages;
+
+    loading = false;
   }
 
   @override
