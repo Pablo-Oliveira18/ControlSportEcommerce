@@ -6,6 +6,7 @@ import 'package:controlsport_app_ecommerce/screen/home/components/section_stagge
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'components/add_section_widget.dart';
 import 'components/section_list.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -101,7 +102,8 @@ class HomeScreen extends StatelessWidget {
                         return Container();
                     }
                   }).toList();
-
+                  if (homeManager.editing)
+                    children.add(AddSectionWidget(homeManager));
                   return SliverList(
                     delegate: SliverChildListDelegate(children),
                   );
