@@ -1,5 +1,6 @@
 import 'package:controlsport_app_ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:controlsport_app_ecommerce/models/home/home_manager.dart';
+import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
 import 'package:controlsport_app_ecommerce/screen/home/components/section_staggered.dart';
 import 'package:controlsport_app_ecommerce/screen/home/components/section_staggeredCard.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,51 @@ class HomeScreen extends StatelessWidget {
                     icon: Icon(Icons.shopping_cart),
                     color: Colors.white,
                     onPressed: () => Navigator.of(context).pushNamed('/cart'),
+                  ),
+                  Consumer2<UserManager, HomeManager>(
+                    builder: (_, userManager, homeManager, __) {
+                      if (userManager.adminEnabled) {
+                        if (homeManager.editing) {
+                          return PopupMenuButton(
+                            color: Theme.of(context).primaryColor,
+                            icon: Icon(
+                              Icons.subject_sharp,
+                              color: Colors.white,
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: Colors.white)),
+                            onSelected: (e) {
+                              if (e == 'Aplicar') {
+                                homeManager.saveEditing();
+                              } else {
+                                homeManager.discardEditing();
+                              }
+                            },
+                            itemBuilder: (_) {
+                              return ['Aplicar', 'Descartar'].map((e) {
+                                return PopupMenuItem(
+                                  value: e,
+                                  child: Text(
+                                    e,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                );
+                              }).toList();
+                            },
+                          );
+                        } else {
+                          return IconButton(
+                            icon: Icon(Icons.edit),
+                            color: Colors.white,
+                            onPressed: homeManager.enterEditing,
+                          );
+                        }
+                      } else
+                        return Container();
+                    },
                   ),
                 ],
               ),

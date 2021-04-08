@@ -1,4 +1,5 @@
 import 'package:controlsport_app_ecommerce/models/products/product.dart';
+import 'package:controlsport_app_ecommerce/models/products/product_manager.dart';
 import 'package:controlsport_app_ecommerce/screen/edit_product/components/sizes_form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -144,11 +145,15 @@ class EditProductScreen extends StatelessWidget {
                           height: 44,
                           child: RaisedButton(
                             onPressed: !product.loading
-                                ? () {
+                                ? () async {
                                     if (formKey.currentState.validate()) {
                                       formKey.currentState.save();
 
-                                      product.save();
+                                      await product.save();
+                                      context
+                                          .read<ProductManager>()
+                                          .update(product);
+                                      Navigator.of(context).pop();
                                     }
                                   }
                                 : null,
