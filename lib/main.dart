@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 
 import 'models/admins/admin_users_manager.dart';
 import 'screen/edit_product/edit_product_screen.dart';
+import 'screen/select_product/select_product_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -78,7 +79,8 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(
                   builder: (_) =>
                       EditProductScreen(settings.arguments as Product));
-
+            case '/select_product':
+              return MaterialPageRoute(builder: (_) => SelectProductScreen());
             case '/base':
             default:
               return MaterialPageRoute(builder: (_) => BaseScreen());
