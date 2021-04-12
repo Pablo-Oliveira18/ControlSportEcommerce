@@ -1,3 +1,5 @@
+import 'package:controlsport_app_ecommerce/common/cart/empy_card.dart';
+import 'package:controlsport_app_ecommerce/common/cart/login_card.dart';
 import 'package:controlsport_app_ecommerce/common/cart/price_cart.dart';
 import 'package:controlsport_app_ecommerce/models/cart(carrinho)/cart_manager.dart';
 import 'package:controlsport_app_ecommerce/screen/cart/components/cart_tile.dart';
@@ -14,18 +16,28 @@ class CartScreen extends StatelessWidget {
       ),
       body: Consumer<CartManager>(
         builder: (_, cartManager, __) {
+          if (cartManager.usuario == null) {
+            return LoginCard();
+          }
+
+          if (cartManager.items.isEmpty) {
+            return EmptyCard(
+              iconData: Icons.remove_shopping_cart,
+              title: 'Nenhum produto no carrinho!',
+            );
+          }
           return ListView(
             children: <Widget>[
               Column(
                 children: cartManager.items
-                    .map((cartProduct) => CartTile(cartProduct))
+                    .map((CartProduct) => CartTile(CartProduct))
                     .toList(),
               ),
               PriceCard(
                 buttonText: 'Continuar',
                 onPressed: cartManager.isCartValid
                     ? () {
-                        print('valido');
+                        Navigator.of(context).pushNamed('/address');
                       }
                     : null,
               ),

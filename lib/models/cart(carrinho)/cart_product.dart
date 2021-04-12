@@ -45,7 +45,7 @@ class CartProduct extends ChangeNotifier {
 
   Map<String, dynamic> toCartMap() {
     return {
-      'pid': product.id,
+      'pid': productId,
       'quantity': quantity,
       'size': size,
     };

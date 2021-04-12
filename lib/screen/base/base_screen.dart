@@ -9,7 +9,12 @@ import 'package:controlsport_app_ecommerce/screen/products/products_screen.dart'
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BaseScreen extends StatelessWidget {
+class BaseScreen extends StatefulWidget {
+  @override
+  _BaseScreenState createState() => _BaseScreenState();
+}
+
+class _BaseScreenState extends State<BaseScreen> {
   // Page Controller (Controlador de page View)
 
   final PageController pageController = PageController();

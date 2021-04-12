@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:controlsport_app_ecommerce/models/address/address.dart';
 
 class Usuario {
   String email = "";
@@ -20,11 +21,16 @@ class Usuario {
     this.sexo,
   });
 
+  Address address;
   Usuario.fromDocument(DocumentSnapshot document) {
     id = document.id;
     nomeCompleto = document.data()['name'] as String;
     email = document.data()['email'] as String;
     sexo = document.data()['sexo'] as String;
+    if (document.data().containsKey('address')) {
+      address =
+          Address.fromMap(document.data()['address'] as Map<String, dynamic>);
+    }
   }
 
   DocumentReference get firestoreRef =>
@@ -47,7 +53,13 @@ class Usuario {
       'cpf': cpf,
       'telefone': telefone,
       'sexo': sexo,
+      if (address != null) 'address': address.toMap(),
     };
+  }
+
+  void setAddress(Address address) {
+    this.address = address;
+    saveData();
   }
 
   String getNomeCompleto() {
