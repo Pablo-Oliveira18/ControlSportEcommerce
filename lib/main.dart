@@ -3,11 +3,13 @@ import 'package:controlsport_app_ecommerce/models/home/home_manager.dart';
 import 'package:controlsport_app_ecommerce/models/products/product.dart';
 import 'package:controlsport_app_ecommerce/models/products/product_manager.dart';
 import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
+import 'package:controlsport_app_ecommerce/screen/address/address_scren.dart';
 import 'package:controlsport_app_ecommerce/screen/base/base_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/cart/cart_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/login/login_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/product_visializar/product_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/signup(Cadastro)/cadastro_screen.dart';
+import 'package:controlsport_app_ecommerce/service/cepaberto_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +76,8 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => CadastroUserScreen());
             case '/cart':
               return MaterialPageRoute(builder: (_) => CartScreen());
-
+            case '/address':
+              return MaterialPageRoute(builder: (_) => AddressScreen());
             case '/edit_product':
               return MaterialPageRoute(
                   builder: (_) =>
