@@ -6,6 +6,7 @@ import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
 import 'package:controlsport_app_ecommerce/screen/address/address_scren.dart';
 import 'package:controlsport_app_ecommerce/screen/base/base_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/cart/cart_screen.dart';
+import 'package:controlsport_app_ecommerce/screen/checkout/checkout_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/login/login_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/product_visializar/product_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/signup(Cadastro)/cadastro_screen.dart';
@@ -84,6 +85,8 @@ class MyApp extends StatelessWidget {
                       EditProductScreen(settings.arguments as Product));
             case '/select_product':
               return MaterialPageRoute(builder: (_) => SelectProductScreen());
+            case '/checkout':
+              return MaterialPageRoute(builder: (_) => CheckoutScreen());
             case '/base':
             default:
               return MaterialPageRoute(builder: (_) => BaseScreen());

@@ -2,7 +2,6 @@ import 'package:controlsport_app_ecommerce/common/custom_drawer/custom_drawer_he
 import 'package:controlsport_app_ecommerce/common/custom_drawer/drawer_tile.dart';
 import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -15,10 +14,7 @@ class CustomDrawer extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    const Color.fromARGB(255, 203, 236, 241),
-                    Colors.white
-                  ],
+                  colors: [const Color.fromARGB(6, 218, 165, 32), Colors.white],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
