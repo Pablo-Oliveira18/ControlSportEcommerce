@@ -76,7 +76,8 @@ class MyApp extends StatelessWidget {
             case '/cadastro':
               return MaterialPageRoute(builder: (_) => CadastroUserScreen());
             case '/cart':
-              return MaterialPageRoute(builder: (_) => CartScreen());
+              return MaterialPageRoute(
+                  builder: (_) => CartScreen(), settings: settings);
             case '/address':
               return MaterialPageRoute(builder: (_) => AddressScreen());
             case '/edit_product':
