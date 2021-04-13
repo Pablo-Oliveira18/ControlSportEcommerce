@@ -27,6 +27,7 @@ class CartProduct extends ChangeNotifier {
   String productId;
   int quantity;
   String size;
+  num fixedPrice;
 
   Product _product;
   Product get product => _product;
@@ -67,6 +68,15 @@ class CartProduct extends ChangeNotifier {
   void decrement() {
     quantity--;
     notifyListeners();
+  }
+
+  Map<String, dynamic> toOrderItemMap() {
+    return {
+      'pid': productId,
+      'quantity': quantity,
+      'size': size,
+      'fixedPrice': fixedPrice ?? unitPrice,
+    };
   }
 
   bool get hasStock {

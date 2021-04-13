@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:controlsport_app_ecommerce/models/cart(carrinho)/cart_manager.dart';
+import 'package:controlsport_app_ecommerce/models/order/order.dart';
 import 'package:controlsport_app_ecommerce/models/products/product.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -18,10 +19,15 @@ class CheckoutManager extends ChangeNotifier {
       await _decrementStock();
     } catch (e) {
       onStockFail(e);
-      debugPrint(e.toString());
+      return;
     }
 
-    _getOrderId().then((value) => print(value));
+    final orderId = await _getOrderId();
+
+    final order = Order.fromCartManager(cartManager);
+    order.orderId = orderId.toString();
+
+    await order.save();
   }
 
   Future<int> _getOrderId() async {
