@@ -3,6 +3,7 @@ import 'package:controlsport_app_ecommerce/models/page_manager.dart';
 import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
 import 'package:controlsport_app_ecommerce/screen/admin_users/admin_users_scrren.dart';
 import 'package:controlsport_app_ecommerce/screen/home/home_screen.dart';
+import 'package:controlsport_app_ecommerce/screen/order/orders_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/products/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,12 +30,7 @@ class _BaseScreenState extends State<BaseScreen> {
             children: <Widget>[
               HomeScreen(),
               ProdutsScreen(),
-              Scaffold(
-                drawer: CustomDrawer(),
-                appBar: AppBar(
-                  title: const Text('Home3'),
-                ),
-              ),
+              OrdersScreen(),
               Scaffold(
                 drawer: CustomDrawer(),
                 appBar: AppBar(
