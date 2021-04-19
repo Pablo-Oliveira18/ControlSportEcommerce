@@ -41,6 +41,36 @@ class Order {
     });
   }
 
+  DocumentReference get firestoreRef =>
+      firestore.collection('orders').doc(orderId);
+
+  void updateFromDocument(DocumentSnapshot doc) {
+    status = Status.values[doc.data()['status'] as int];
+  }
+
+  Function() get back {
+    return status.index >= Status.transporting.index
+        ? () {
+            status = Status.values[status.index - 1];
+            firestoreRef.update({'status': status.index});
+          }
+        : null;
+  }
+
+  Function() get advance {
+    return status.index <= Status.transporting.index
+        ? () {
+            status = Status.values[status.index + 1];
+            firestoreRef.update({'status': status.index});
+          }
+        : null;
+  }
+
+  void cancel() {
+    status = Status.canceled;
+    firestoreRef.update({'status': status.index});
+  }
+
   String orderId;
 
   List<CartProduct> items;

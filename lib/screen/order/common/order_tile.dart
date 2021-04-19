@@ -3,9 +3,10 @@ import 'package:controlsport_app_ecommerce/screen/order/common/order_product_til
 import 'package:flutter/material.dart';
 
 class OrderTile extends StatelessWidget {
-  const OrderTile(this.order);
+  const OrderTile(this.order, {this.showControls = false});
 
   final Order order;
+  final bool showControls;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +39,12 @@ class OrderTile extends StatelessWidget {
               ],
             ),
             Text(
-              'Em transporte',
+              order.statusText,
               style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  color: primaryColor,
+                  color: order.status == Status.canceled
+                      ? Colors.red
+                      : primaryColor,
                   fontSize: 14),
             )
           ],
@@ -51,7 +54,34 @@ class OrderTile extends StatelessWidget {
             children: order.items.map((e) {
               return OrderProductTile(e);
             }).toList(),
-          )
+          ),
+          if (showControls && order.status != Status.canceled)
+            SizedBox(
+              height: 50,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: order.cancel,
+                    textColor: Colors.red,
+                    child: const Text('Cancelar'),
+                  ),
+                  FlatButton(
+                    onPressed: order.back,
+                    child: const Text('Recuar'),
+                  ),
+                  FlatButton(
+                    onPressed: order.advance,
+                    child: const Text('Avançar'),
+                  ),
+                  FlatButton(
+                    onPressed: () {},
+                    textColor: primaryColor,
+                    child: const Text('Endereço'),
+                  )
+                ],
+              ),
+            )
         ],
       ),
     );
