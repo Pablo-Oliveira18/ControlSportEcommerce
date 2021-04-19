@@ -1,5 +1,8 @@
+import 'package:controlsport_app_ecommerce/models/admins/admin_orders_manager.dart';
 import 'package:controlsport_app_ecommerce/models/cart(carrinho)/cart_manager.dart';
 import 'package:controlsport_app_ecommerce/models/home/home_manager.dart';
+import 'package:controlsport_app_ecommerce/models/order/order.dart';
+import 'package:controlsport_app_ecommerce/models/order/order_manager.dart';
 import 'package:controlsport_app_ecommerce/models/products/product.dart';
 import 'package:controlsport_app_ecommerce/models/products/product_manager.dart';
 import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
@@ -7,6 +10,7 @@ import 'package:controlsport_app_ecommerce/screen/address/address_scren.dart';
 import 'package:controlsport_app_ecommerce/screen/base/base_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/cart/cart_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/checkout/checkout_screen.dart';
+import 'package:controlsport_app_ecommerce/screen/confirmation/confimation_scrren.dart';
 import 'package:controlsport_app_ecommerce/screen/login/login_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/product_visializar/product_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/signup(Cadastro)/cadastro_screen.dart';
@@ -54,7 +58,19 @@ class MyApp extends StatelessWidget {
           lazy: false,
           update: (_, userManager, adminUsersManager) =>
               adminUsersManager..updateUser(userManager),
-        )
+        ),
+        ChangeNotifierProxyProvider<UserManager, OrdersManager>(
+          create: (_) => OrdersManager(),
+          lazy: false,
+          update: (_, userManager, ordersManager) =>
+              ordersManager..updateUser(userManager.usuario),
+        ),
+        ChangeNotifierProxyProvider<UserManager, AdminOrdersManager>(
+          create: (_) => AdminOrdersManager(),
+          lazy: false,
+          update: (_, userManager, adminOrdersManager) => adminOrdersManager
+            ..updateAdmin(adminEnabled: userManager.adminEnabled),
+        ),
       ],
       child: MaterialApp(
         title: 'Sport Control',
@@ -88,9 +104,14 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => SelectProductScreen());
             case '/checkout':
               return MaterialPageRoute(builder: (_) => CheckoutScreen());
+            case '/confirmation':
+              return MaterialPageRoute(
+                  builder: (_) =>
+                      ConfirmationScreen(settings.arguments as Order));
             case '/base':
             default:
-              return MaterialPageRoute(builder: (_) => BaseScreen());
+              return MaterialPageRoute(
+                  builder: (_) => BaseScreen(), settings: settings);
           }
         },
       ),

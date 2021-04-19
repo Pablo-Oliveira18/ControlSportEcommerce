@@ -361,9 +361,8 @@ class _CadastroUserScreenState extends State<CadastroUserScreen> {
                                   formkey.currentState.save();
                                   if (usuario.senha != usuario.confirmarSenha) {
                                     scaffoldKey.currentState.showSnackBar(
-                                      SnackBar(
-                                        content:
-                                            const Text('Senhas não conferem'),
+                                      const SnackBar(
+                                        content: Text('Senhas não coincidem!'),
                                         backgroundColor: Colors.red,
                                       ),
                                     );

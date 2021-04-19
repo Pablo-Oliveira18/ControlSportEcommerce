@@ -167,6 +167,14 @@ class CartManager extends ChangeNotifier {
     return true;
   }
 
+  void clear() {
+    for (final cartProduct in items) {
+      usuario.cartReference.doc(cartProduct.id).delete();
+    }
+    items.clear();
+    notifyListeners();
+  }
+
   void removeAddress() {
     address = null;
     deliveryPrice = null;
