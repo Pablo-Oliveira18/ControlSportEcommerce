@@ -1,3 +1,4 @@
+import 'package:controlsport_app_ecommerce/models/admins/admin_orders_manager.dart';
 import 'package:controlsport_app_ecommerce/models/cart(carrinho)/cart_manager.dart';
 import 'package:controlsport_app_ecommerce/models/home/home_manager.dart';
 import 'package:controlsport_app_ecommerce/models/order/order.dart';
@@ -63,6 +64,12 @@ class MyApp extends StatelessWidget {
           lazy: false,
           update: (_, userManager, ordersManager) =>
               ordersManager..updateUser(userManager.usuario),
+        ),
+        ChangeNotifierProxyProvider<UserManager, AdminOrdersManager>(
+          create: (_) => AdminOrdersManager(),
+          lazy: false,
+          update: (_, userManager, adminOrdersManager) => adminOrdersManager
+            ..updateAdmin(adminEnabled: userManager.adminEnabled),
         ),
       ],
       child: MaterialApp(

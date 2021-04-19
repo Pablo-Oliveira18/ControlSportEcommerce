@@ -1,6 +1,7 @@
 import 'package:controlsport_app_ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:controlsport_app_ecommerce/models/page_manager.dart';
 import 'package:controlsport_app_ecommerce/models/usuarios/user_manager.dart';
+import 'package:controlsport_app_ecommerce/screen/admin_orders/admin_orders_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/admin_users/admin_users_scrren.dart';
 import 'package:controlsport_app_ecommerce/screen/home/home_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/order/orders_screen.dart';
@@ -39,12 +40,7 @@ class _BaseScreenState extends State<BaseScreen> {
               ),
               if (userManager.adminEnabled) ...[
                 AdminUsersScreen(),
-                Scaffold(
-                  drawer: CustomDrawer(),
-                  appBar: AppBar(
-                    title: const Text('Pedidos'),
-                  ),
-                ),
+                AdminOrdersScreen(),
               ]
             ],
           );
