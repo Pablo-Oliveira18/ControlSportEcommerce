@@ -43,11 +43,12 @@ dependencies:
   transparent_image: ^1.0.0
   alphabet_list_scroll_view: ^1.0.6
   faker: ^1.2.1
-  image_picker: ^0.6.7
+  image_picker: ^0.6.7+1
   image_cropper: ^1.4.0
   uuid: ^2.0.4
   dio: ^3.0.9
   geolocator: ^5.3.1
+  sliding_up_panel: ^1.0.2
 
 dev_dependencies:
   flutter_test:
