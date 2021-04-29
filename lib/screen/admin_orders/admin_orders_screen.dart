@@ -3,13 +3,18 @@ import 'package:controlsport_app_ecommerce/common/custom_drawer/custom_drawer.da
 import 'package:controlsport_app_ecommerce/common/custom_icon_button.dart';
 import 'package:controlsport_app_ecommerce/models/admins/admin_orders_manager.dart';
 import 'package:controlsport_app_ecommerce/models/order/order.dart';
-import 'package:controlsport_app_ecommerce/screen/order/common/order_tile.dart';
+import 'package:controlsport_app_ecommerce/common/order/order_tile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class AdminOrdersScreen extends StatelessWidget {
+class AdminOrdersScreen extends StatefulWidget {
+  @override
+  _AdminOrdersScreenState createState() => _AdminOrdersScreenState();
+}
+
+class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
   final PanelController panelController = PanelController();
 
   @override
@@ -25,6 +30,7 @@ class AdminOrdersScreen extends StatelessWidget {
           final filteredOrders = ordersManager.filteredOrders;
 
           return SlidingUpPanel(
+            color: Colors.amber[100],
             controller: panelController,
             body: Column(
               children: <Widget>[
@@ -55,8 +61,9 @@ class AdminOrdersScreen extends StatelessWidget {
                 if (filteredOrders.isEmpty)
                   Expanded(
                     child: EmptyCard(
-                      title: 'Nenhuma venda realizada!',
-                      iconData: Icons.border_clear,
+                      title: 'Que pena, \nnenhuma venda realizada!',
+                      iconData: Icons.mood_bad_sharp,
+                      color: Colors.red,
                     ),
                   )
                 else
@@ -93,7 +100,7 @@ class AdminOrdersScreen extends StatelessWidget {
                     color: Colors.white,
                     alignment: Alignment.center,
                     child: Text(
-                      'Filtros',
+                      'Tipos de Pedidos',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.w800,

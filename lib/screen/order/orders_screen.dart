@@ -2,7 +2,7 @@ import 'package:controlsport_app_ecommerce/common/cart/empy_card.dart';
 import 'package:controlsport_app_ecommerce/common/cart/login_card.dart';
 import 'package:controlsport_app_ecommerce/common/custom_drawer/custom_drawer.dart';
 import 'package:controlsport_app_ecommerce/models/order/order_manager.dart';
-import 'package:controlsport_app_ecommerce/screen/order/common/order_tile.dart';
+import 'package:controlsport_app_ecommerce/common/order/order_tile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';

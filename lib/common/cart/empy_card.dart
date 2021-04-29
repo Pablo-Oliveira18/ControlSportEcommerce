@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class EmptyCard extends StatelessWidget {
-  const EmptyCard({this.title, this.iconData});
+  const EmptyCard({this.title, this.iconData, this.color});
 
   final String title;
   final IconData iconData;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class EmptyCard extends StatelessWidget {
           Icon(
             iconData,
             size: 80.0,
-            color: Colors.white,
+            color: color != null ? color : Colors.white,
           ),
           const SizedBox(
             height: 16.0,

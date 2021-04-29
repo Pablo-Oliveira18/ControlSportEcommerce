@@ -1,3 +1,5 @@
+import 'package:controlsport_app_ecommerce/common/order/cancel_order_dialog.dart';
+import 'package:controlsport_app_ecommerce/common/order/export_address_dilog.dart';
 import 'package:controlsport_app_ecommerce/models/order/order.dart';
 import 'package:controlsport_app_ecommerce/screen/order/common/order_product_tile.dart';
 import 'package:flutter/material.dart';
@@ -62,11 +64,6 @@ class OrderTile extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
                   FlatButton(
-                    onPressed: order.cancel,
-                    textColor: Colors.red,
-                    child: const Text('Cancelar'),
-                  ),
-                  FlatButton(
                     onPressed: order.back,
                     child: const Text('Recuar'),
                   ),
@@ -75,10 +72,23 @@ class OrderTile extends StatelessWidget {
                     child: const Text('Avançar'),
                   ),
                   FlatButton(
-                    onPressed: () {},
-                    textColor: primaryColor,
-                    child: const Text('Endereço'),
-                  )
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (_) => CancelOrderDialog(order));
+                    },
+                    textColor: Colors.red,
+                    child: const Text('Cancelar'),
+                  ),
+                  // FlatButton(
+                  //   onPressed: () {
+                  //     showDialog(
+                  //         context: context,
+                  //         builder: (_) => ExportAddressDialog(order.address));
+                  //   },
+                  //   textColor: primaryColor,
+                  //   child: const Text('Endereço'),
+                  // )
                 ],
               ),
             )
