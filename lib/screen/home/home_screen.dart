@@ -29,12 +29,19 @@ class HomeScreen extends StatelessWidget {
                 snap: true,
                 floating: true,
                 elevation: 0,
+                // title: Text('Control Sport\'s'),
+
                 backgroundColor: Colors.transparent,
                 flexibleSpace: const FlexibleSpaceBar(
-                  title: Text('Control Sport\'s'),
                   centerTitle: true,
                 ),
                 actions: <Widget>[
+                  Center(
+                    child: Image.asset(
+                      'assets/logo.png',
+                      width: 210,
+                    ),
+                  ),
                   IconButton(
                     icon: Icon(Icons.shopping_cart),
                     color: Colors.white,
