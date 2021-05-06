@@ -6,6 +6,7 @@ import 'package:controlsport_app_ecommerce/screen/admin_users/admin_users_scrren
 import 'package:controlsport_app_ecommerce/screen/home/home_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/order/orders_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/products/products_screen.dart';
+import 'package:controlsport_app_ecommerce/screen/storage/stores_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -40,12 +41,7 @@ class _BaseScreenState extends State<BaseScreen> {
               HomeScreen(),
               ProdutsScreen(),
               OrdersScreen(),
-              Scaffold(
-                drawer: CustomDrawer(),
-                appBar: AppBar(
-                  title: const Text('Home4'),
-                ),
-              ),
+              StoresScreen(),
               if (userManager.adminEnabled) ...[
                 AdminUsersScreen(),
                 AdminOrdersScreen(),
