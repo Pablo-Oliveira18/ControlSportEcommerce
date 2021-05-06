@@ -50,7 +50,7 @@ dependencies:
   geolocator: ^5.3.1
   sliding_up_panel: ^1.0.2
   screenshot: ^0.1.1
-  gallery_saver: ^2.0.1
+  # gallery_saver: ^2.1.0
 
 dev_dependencies:
   flutter_test:

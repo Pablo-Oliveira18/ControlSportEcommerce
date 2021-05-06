@@ -1,6 +1,6 @@
 import 'package:controlsport_app_ecommerce/models/address/address.dart';
 import 'package:flutter/material.dart';
-import 'package:gallery_saver/gallery_saver.dart';
+// import 'package:gallery_saver/gallery_saver.dart';
 import 'package:screenshot/screenshot.dart';
 
 class ExportAddressDialog extends StatelessWidget {
@@ -29,15 +29,15 @@ class ExportAddressDialog extends StatelessWidget {
       ),
       contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       actions: <Widget>[
-        FlatButton(
-          onPressed: () async {
-            Navigator.of(context).pop();
-            final file = await screenshotController.capture();
-            await GallerySaver.saveImage(file.path);
-          },
-          textColor: Theme.of(context).primaryColor,
-          child: const Text('Exportar'),
-        )
+        // FlatButton(
+        //   onPressed: () async {
+        //     Navigator.of(context).pop();
+        //     final file = await screenshotController.capture();
+        //     await GallerySaver.saveImage(file.path);
+        //   },
+        //   textColor: Theme.of(context).primaryColor,
+        //   child: const Text('Exportar'),
+        // )
       ],
     );
   }

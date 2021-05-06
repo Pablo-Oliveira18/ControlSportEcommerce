@@ -17,6 +17,7 @@ class Product extends ChangeNotifier {
     brandy = document['brandy'] as String;
     images = List<String>.from(document.data()['images']
         as List<dynamic>); // transforma a lista dinamica em String
+    deleted = (document.data()['deleted'] ?? false) as bool;
     sizes = (document.data()['sizes'] as List<dynamic> ?? [1])
         .map((s) => ItemSize.fromMap(s))
         .toList();
@@ -30,7 +31,8 @@ class Product extends ChangeNotifier {
       this.images,
       this.sizes,
       this.brandy,
-      this.category}) {
+      this.category,
+      this.deleted = false}) {
     images = images ?? [];
     sizes = sizes ?? [];
   }
@@ -44,6 +46,7 @@ class Product extends ChangeNotifier {
       brandy: brandy,
       images: List.from(images),
       sizes: sizes.map((size) => size.clone()).toList(),
+      deleted: deleted,
     );
   }
 
@@ -55,7 +58,7 @@ class Product extends ChangeNotifier {
   String brandy;
   List<String> images;
   List<ItemSize> sizes;
-
+  bool deleted;
   ItemSize _selectedSize;
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -89,13 +92,13 @@ class Product extends ChangeNotifier {
   }
 
   bool get hasStock {
-    return totalStock > 0;
+    return totalStock > 0 && !deleted;
   }
 
   num get basePrice {
     num lowest = double.infinity;
     for (final size in sizes) {
-      if (size.price < lowest && size.hasStock) lowest = size.price;
+      if (size.price < lowest) lowest = size.price;
     }
     return lowest;
   }
@@ -110,6 +113,10 @@ class Product extends ChangeNotifier {
 
   List<Map<String, dynamic>> exportSizeList() {
     return sizes.map((size) => size.toMap()).toList();
+  }
+
+  void delete() {
+    firestoreRef.update({'deleted': true});
   }
 
   Future<void> save() async {
