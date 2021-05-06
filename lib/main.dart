@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'models/admins/admin_users_manager.dart';
+import 'models/storage/stores_manager.dart';
 import 'screen/edit_product/edit_product_screen.dart';
 import 'screen/select_product/select_product_screen.dart';
 
@@ -46,6 +47,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => HomeManager(),
           lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => StoresManager(),
         ),
         ChangeNotifierProxyProvider<UserManager, CartManager>(
           create: (_) => CartManager(),
