@@ -7,6 +7,7 @@ import 'package:controlsport_app_ecommerce/screen/home/home_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/order/orders_screen.dart';
 import 'package:controlsport_app_ecommerce/screen/products/products_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -18,6 +19,13 @@ class _BaseScreenState extends State<BaseScreen> {
   // Page Controller (Controlador de page View)
 
   final PageController pageController = PageController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
 
   @override
   Widget build(BuildContext context) {
