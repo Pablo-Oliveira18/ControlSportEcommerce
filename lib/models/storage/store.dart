@@ -3,6 +3,8 @@ import 'package:controlsport_app_ecommerce/models/address/address.dart';
 import 'package:flutter/material.dart';
 import 'package:controlsport_app_ecommerce/helpers/extensions.dart';
 
+enum StoreStatus { closed, open, closing }
+
 class Store {
   Store.fromDocument(DocumentSnapshot doc) {
     name = doc.data()['name'] as String;
@@ -27,7 +29,7 @@ class Store {
       }
     });
 
-    print(opening);
+    updateStatus();
   }
 
   String name;
@@ -35,6 +37,7 @@ class Store {
   String phone;
   Address address;
   Map<String, Map<String, TimeOfDay>> opening;
+  StoreStatus status;
 
   String get addressText =>
       '${address.street}, ${address.number}${address.complement.isNotEmpty ? ' - ${address.complement}' : ''} - '
@@ -49,5 +52,47 @@ class Store {
   String formattedPeriod(Map<String, TimeOfDay> period) {
     if (period == null) return "Fechada";
     return '${period['from'].formatted()} - ${period['to'].formatted()}';
+  }
+
+  String get cleanPhone => phone.replaceAll(RegExp(r"[^\d]"), "");
+
+  void updateStatus() {
+    final weekDay = DateTime.now().weekday;
+
+    Map<String, TimeOfDay> period;
+    if (weekDay >= 1 && weekDay <= 5) {
+      period = opening['monfri'];
+    } else if (weekDay == 6) {
+      period = opening['saturday'];
+    } else {
+      period = opening['sunday'];
+    }
+
+    final now = TimeOfDay.now();
+
+    if (period == null) {
+      status = StoreStatus.closed;
+    } else if (period['from'].toMinutes() < now.toMinutes() &&
+        period['to'].toMinutes() - 15 > now.toMinutes()) {
+      status = StoreStatus.open;
+    } else if (period['from'].toMinutes() < now.toMinutes() &&
+        period['to'].toMinutes() > now.toMinutes()) {
+      status = StoreStatus.closing;
+    } else {
+      status = StoreStatus.closed;
+    }
+  }
+
+  String get statusText {
+    switch (status) {
+      case StoreStatus.closed:
+        return 'Fechada';
+      case StoreStatus.open:
+        return 'Aberta';
+      case StoreStatus.closing:
+        return 'Fechando';
+      default:
+        return '';
+    }
   }
 }
