@@ -1,12 +1,13 @@
 import 'package:controlsport_app_ecommerce/screen/checkout/components/card_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:controlsport_app_ecommerce/models/credit_card/credit_card.dart';
 
 class CardBack extends StatelessWidget {
-  const CardBack({this.cvvFocus});
+  const CardBack({this.cvvFocus, this.creditCard});
 
   final FocusNode cvvFocus;
-
+  final CreditCard creditCard;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -45,6 +46,7 @@ class CardBack extends StatelessWidget {
                         return null;
                       },
                       focusNode: cvvFocus,
+                      onSaved: creditCard.setCVV,
                     ),
                   ),
                 ),

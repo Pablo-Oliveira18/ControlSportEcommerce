@@ -3,6 +3,7 @@ import 'package:controlsport_app_ecommerce/models/cart(carrinho)/cart_manager.da
 import 'package:controlsport_app_ecommerce/models/order/order.dart';
 import 'package:controlsport_app_ecommerce/models/products/product.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:controlsport_app_ecommerce/models/credit_card/credit_card.dart';
 
 class CheckoutManager extends ChangeNotifier {
   CartManager cartManager;
@@ -21,7 +22,8 @@ class CheckoutManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> checkout({Function onStockFail, Function onSuccess}) async {
+  Future<void> checkout(
+      {CreditCard creditCard, Function onStockFail, Function onSuccess}) async {
     loading = true;
 
     try {

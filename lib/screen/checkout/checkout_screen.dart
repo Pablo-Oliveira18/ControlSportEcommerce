@@ -3,6 +3,8 @@ import 'package:controlsport_app_ecommerce/models/cart(carrinho)/cart_manager.da
 import 'package:controlsport_app_ecommerce/models/checkout/checkout_manager.dart';
 import 'package:controlsport_app_ecommerce/screen/checkout/components/cpf_field.dart';
 import 'package:controlsport_app_ecommerce/screen/checkout/components/dados_cartao.dart';
+import 'package:controlsport_app_ecommerce/models/credit_card/credit_card.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -12,6 +14,7 @@ import 'components/credit_card_widget.dart';
 class CheckoutScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final CreditCard creditCard = CreditCard();
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProxyProvider<CartManager, CheckoutManager>(
@@ -58,7 +61,9 @@ class CheckoutScreen extends StatelessWidget {
                 key: formKey,
                 child: ListView(
                   children: <Widget>[
-                    CreditCardWidget(),
+                    CreditCardWidget(
+                      creditCard,
+                    ),
                     // DadosCartao(),
                     CpfField(),
                     PriceCard(
@@ -66,21 +71,20 @@ class CheckoutScreen extends StatelessWidget {
                       onPressed: () {
                         if (formKey.currentState.validate()) {
                           formKey.currentState.save();
+                          print(creditCard.toString());
                           print('enviar');
-                          /*checkoutManager.checkout(
-                              onStockFail: (e){
+                          checkoutManager.checkout(
+                              creditCard: creditCard,
+                              onStockFail: (e) {
                                 Navigator.of(context).popUntil(
-                                        (route) => route.settings.name == '/cart');
+                                    (route) => route.settings.name == '/cart');
                               },
-                              onSuccess: (order){
+                              onSuccess: (order) {
                                 Navigator.of(context).popUntil(
-                                        (route) => route.settings.name == '/');
-                                Navigator.of(context).pushNamed(
-                                    '/confirmation',
-                                    arguments: order
-                                );
-                              }
-                          );*/
+                                    (route) => route.settings.name == '/');
+                                Navigator.of(context).pushNamed('/confirmation',
+                                    arguments: order);
+                              });
                         }
                       },
                     )
