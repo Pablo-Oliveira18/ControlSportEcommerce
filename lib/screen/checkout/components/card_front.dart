@@ -21,11 +21,11 @@ class CardFront extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       elevation: 16,
       child: Container(
-        height: 200,
-        color: const Color(0xFF1B4B52),
+        height: 210,
+        color: const Color(0xFFffecb3),
         padding: const EdgeInsets.all(24),
         child: Row(
           children: <Widget>[
@@ -33,6 +33,10 @@ class CardFront extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
+                  Center(
+                    child: Text("Dados do cartão de crédito"),
+                  ),
+                  SizedBox(height: 15),
                   CardTextField(
                     title: 'Número',
                     hint: '0000 0000 0000 0000',

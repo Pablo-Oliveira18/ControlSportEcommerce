@@ -53,7 +53,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
           children: <Widget>[
             FlipCard(
               key: cardKey,
-              direction: FlipDirection.HORIZONTAL,
+              direction: FlipDirection.VERTICAL,
               speed: 700,
               flipOnTouch: false,
               front: CardFront(

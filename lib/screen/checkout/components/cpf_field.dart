@@ -12,7 +12,8 @@ class CpfField extends StatelessWidget {
     final userManager = context.watch<UserManager>();
     //
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      color: Colors.amber[100],
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -26,10 +27,13 @@ class CpfField extends StatelessWidget {
                 ),
               ),
               TextFormField(
-                initialValue: userManager.usuario.cpf,
-                decoration: const InputDecoration(
-                  hintText: '000.000.000-00',
-                  isDense: true,
+                decoration: InputDecoration(
+                  labelText: 'CPF do Titular',
+                  prefixIcon: Icon(Icons.credit_card),
+                  contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(32),
+                  ),
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
@@ -43,7 +47,7 @@ class CpfField extends StatelessWidget {
                   return null;
                 },
                 onSaved: userManager.usuario.setCpf,
-              )
+              ),
             ],
           )),
     );

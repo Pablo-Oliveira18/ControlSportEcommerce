@@ -2,6 +2,7 @@ import 'package:controlsport_app_ecommerce/common/cart/price_cart.dart';
 import 'package:controlsport_app_ecommerce/models/cart(carrinho)/cart_manager.dart';
 import 'package:controlsport_app_ecommerce/models/checkout/checkout_manager.dart';
 import 'package:controlsport_app_ecommerce/screen/checkout/components/cpf_field.dart';
+import 'package:controlsport_app_ecommerce/screen/checkout/components/dados_cartao.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -58,6 +59,7 @@ class CheckoutScreen extends StatelessWidget {
                 child: ListView(
                   children: <Widget>[
                     CreditCardWidget(),
+                    // DadosCartao(),
                     CpfField(),
                     PriceCard(
                       buttonText: 'Finalizar Pedido',

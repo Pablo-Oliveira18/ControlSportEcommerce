@@ -45,9 +45,9 @@ class CardTextField extends StatelessWidget {
                     Text(
                       title,
                       style: TextStyle(
-                          fontSize: 10,
+                          fontSize: 13,
                           fontWeight: FontWeight.w400,
-                          color: Colors.white),
+                          color: Colors.black),
                     ),
                     if (state.hasError)
                       const Text(
@@ -63,16 +63,16 @@ class CardTextField extends StatelessWidget {
                 style: TextStyle(
                   color: title == null && state.hasError
                       ? Colors.red
-                      : Colors.white,
+                      : Colors.black,
                   fontWeight: bold ? FontWeight.bold : FontWeight.w500,
                 ),
-                cursorColor: Colors.white,
+                cursorColor: Colors.black,
                 decoration: InputDecoration(
                   hintText: hint,
                   hintStyle: TextStyle(
                       color: title == null && state.hasError
                           ? Colors.red.withAlpha(200)
-                          : Colors.white.withAlpha(100)),
+                          : Colors.black.withAlpha(100)),
                   border: InputBorder.none,
                   isDense: true,
                   contentPadding: const EdgeInsets.symmetric(vertical: 2),
