@@ -127,6 +127,7 @@ class Product extends ChangeNotifier {
       'category': category,
       'brandy': brandy,
       'sizes': exportSizeList(),
+      'deleted': deleted,
     };
 
     if (id == null) {

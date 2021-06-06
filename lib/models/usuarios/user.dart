@@ -31,6 +31,7 @@ class Usuario {
       address =
           Address.fromMap(document.data()['address'] as Map<String, dynamic>);
     }
+    cpf = document.data()['cpf'] as String;
   }
 
   DocumentReference get firestoreRef =>
@@ -54,6 +55,7 @@ class Usuario {
       'telefone': telefone,
       'sexo': sexo,
       if (address != null) 'address': address.toMap(),
+      if (cpf != null) 'cpf': cpf
     };
   }
 
@@ -64,5 +66,10 @@ class Usuario {
 
   String getNomeCompleto() {
     return nomeCompleto;
+  }
+
+  void setCpf(String cpf) {
+    this.cpf = cpf;
+    saveData();
   }
 }
