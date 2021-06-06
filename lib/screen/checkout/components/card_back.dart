@@ -34,6 +34,7 @@ class CardBack extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                     child: CardTextField(
+                      initialValue: creditCard.securityCode,
                       hint: '123',
                       maxLength: 3,
                       inputFormatters: [

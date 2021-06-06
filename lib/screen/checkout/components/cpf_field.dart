@@ -27,6 +27,7 @@ class CpfField extends StatelessWidget {
                 ),
               ),
               TextFormField(
+                initialValue: userManager.usuario.cpf,
                 decoration: InputDecoration(
                   labelText: 'CPF do Titular',
                   prefixIcon: Icon(Icons.credit_card),

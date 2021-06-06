@@ -4,11 +4,13 @@ import 'package:controlsport_app_ecommerce/models/order/order.dart';
 import 'package:controlsport_app_ecommerce/models/products/product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:controlsport_app_ecommerce/models/credit_card/credit_card.dart';
+import 'package:controlsport_app_ecommerce/service/cielo_payment.dart';
 
 class CheckoutManager extends ChangeNotifier {
   CartManager cartManager;
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final CieloPayment cieloPayment = CieloPayment();
 
   // ignore: use_setters_to_change_properties
   void updateCart(CartManager cartManager) {
@@ -23,8 +25,26 @@ class CheckoutManager extends ChangeNotifier {
   }
 
   Future<void> checkout(
-      {CreditCard creditCard, Function onStockFail, Function onSuccess}) async {
+      {CreditCard creditCard,
+      Function onStockFail,
+      Function onSuccess,
+      Function onPayFail}) async {
     loading = true;
+    final orderId = await _getOrderId();
+    String payId;
+    try {
+      payId = await cieloPayment.authorize(
+        creditCard: creditCard,
+        price: cartManager.totalPrice,
+        orderId: orderId.toString(),
+        usuario: cartManager.usuario,
+      );
+      debugPrint('success $payId');
+    } catch (e) {
+      onPayFail(e);
+      loading = false;
+      return;
+    }
 
     try {
       await _decrementStock();
@@ -34,11 +54,19 @@ class CheckoutManager extends ChangeNotifier {
       return;
     }
 
-    final orderId = await _getOrderId();
+    // CAPTURAR PAGAMENTO
+
+    try {
+      await cieloPayment.capture(payId);
+    } catch (e) {
+      onPayFail(e);
+      loading = false;
+      return;
+    }
 
     final order = Order.fromCartManager(cartManager);
     order.orderId = orderId.toString();
-
+    order.payId = payId;
     await order.save();
     cartManager.clear();
 
