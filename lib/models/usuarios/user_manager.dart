@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:controlsport_app_ecommerce/helpers/firabase_erros.dart';
+import 'package:controlsport_app_ecommerce/helpers/validator.dart';
 import 'package:controlsport_app_ecommerce/models/usuarios/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -95,5 +96,18 @@ class UserManager extends ChangeNotifier {
 
   bool getLoading() {
     return _loading;
+  }
+
+  // recuperar senha
+
+  void recoverPass(String email) {
+    try {
+      if (emailValid(email)) {
+        FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+        notifyListeners();
+      }
+    } catch (e) {
+      return;
+    }
   }
 }

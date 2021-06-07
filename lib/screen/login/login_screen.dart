@@ -100,10 +100,36 @@ class LoginScreen extends StatelessWidget {
 
                       Align(
                         alignment: Alignment.centerRight,
-                        child: FlatButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          child: const Text('Esqueci minha senha'),
+                        child: Consumer<UserManager>(
+                          builder: (_, userManager, __) {
+                            return FlatButton(
+                              onPressed: () {
+                                if (emailController.text.isEmpty) {
+                                  scaffoldKey.currentState
+                                      .showSnackBar(const SnackBar(
+                                    content: Text(
+                                        'Insira seu e-mail para recuperação'),
+                                    backgroundColor: Colors.redAccent,
+                                    // ignore: avoid_redundant_argument_values
+                                    duration: Duration(seconds: 4),
+                                  ));
+                                } else {
+                                  userManager.recoverPass(emailController.text);
+                                  scaffoldKey.currentState
+                                      .showSnackBar(SnackBar(
+                                    content: Text(
+                                        'E-mail para redefinição de senha enviado para: \n ${emailController.text}'),
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                    duration: Duration(seconds: 4),
+                                  ));
+                                }
+                              },
+                              // retirar eu padding
+                              padding: EdgeInsets.zero,
+                              child: const Text("Esqueci minha senha"),
+                            );
+                          },
                         ),
                       ),
 
@@ -153,23 +179,23 @@ class LoginScreen extends StatelessWidget {
 
                       // botaão login Google
                       SizedBox(height: 10),
-                      SizedBox(
-                        height: 44,
-                        child: SignInButton(
-                            btnText: 'Entrar com o Google',
-                            buttonType: ButtonType.google,
-                            onPressed: () {
-                              print('click');
-                            }),
-                      ),
+                      // SizedBox(
+                      //   height: 44,
+                      //   child: SignInButton(
+                      //       btnText: 'Entrar com o Google',
+                      //       buttonType: ButtonType.google,
+                      //       onPressed: () {
+                      //         print('click');
+                      //       }),
+                      // ),
 
-                      // botão login git
-                      SizedBox(height: 10),
-                      SizedBox(
-                        height: 44,
-                        child: SignInButton(
-                            buttonType: ButtonType.github, onPressed: () {}),
-                      ),
+                      // // botão login git
+                      // SizedBox(height: 10),
+                      // SizedBox(
+                      //   height: 44,
+                      //   child: SignInButton(
+                      //       buttonType: ButtonType.github, onPressed: () {}),
+                      // ),
                       // ainda n tem conta?
 
                       Align(
