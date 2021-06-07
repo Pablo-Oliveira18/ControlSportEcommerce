@@ -4,6 +4,7 @@ import 'package:controlsport_app_ecommerce/models/checkout/checkout_manager.dart
 import 'package:controlsport_app_ecommerce/screen/checkout/components/cpf_field.dart';
 import 'package:controlsport_app_ecommerce/screen/checkout/components/dados_cartao.dart';
 import 'package:controlsport_app_ecommerce/models/credit_card/credit_card.dart';
+import 'package:controlsport_app_ecommerce/screen/checkout/components/installments.dart';
 
 import 'package:flutter/material.dart';
 
@@ -11,12 +12,30 @@ import 'package:provider/provider.dart';
 
 import 'components/credit_card_widget.dart';
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends StatefulWidget {
+  @override
+  _CheckoutScreenState createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   final CreditCard creditCard = CreditCard();
+
+  int _group = 1;
+
+  void installments(int value) {
+    setState(() {
+      _group = value;
+      print(_group);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final cartManager = context.watch<CartManager>();
     return ChangeNotifierProxyProvider<CartManager, CheckoutManager>(
       create: (_) => CheckoutManager(),
       update: (_, cartManager, checkoutManager) =>
@@ -65,15 +84,54 @@ class CheckoutScreen extends StatelessWidget {
                       creditCard,
                     ),
                     // DadosCartao(),
+                    InstallmentsWidget(),
                     CpfField(),
+                    // Card(
+                    //   margin: const EdgeInsets.symmetric(
+                    //       horizontal: 16, vertical: 8),
+                    //   child: Column(
+                    //     children: <Widget>[
+                    //       ListTile(
+                    //         title: Text(
+                    //             "À vista R\$ ${cartManager.totalPrice.toStringAsFixed(2).replaceAll(".", ",")}"),
+                    //         leading: Radio(
+                    //           value: 1,
+                    //           groupValue: _group,
+                    //           activeColor: Theme.of(context).primaryColor,
+                    //           onChanged: (int value) => installments(value),
+                    //         ),
+                    //       ),
+                    //       ListTile(
+                    //         title: Text(
+                    //             "2 x R\$ ${cartManager.totalPrice.toStringAsFixed(2).replaceAll(".", ",")}"),
+                    //         leading: Radio(
+                    //           value: 2,
+                    //           groupValue: _group,
+                    //           activeColor: Theme.of(context).primaryColor,
+                    //           onChanged: (int value) => installments(value),
+                    //         ),
+                    //       ),
+                    //       ListTile(
+                    //         title: Text(
+                    //             "3 x R\$ ${cartManager.totalPrice.toStringAsFixed(2).replaceAll(".", ",")}"),
+                    //         leading: Radio(
+                    //           value: 3,
+                    //           groupValue: _group,
+                    //           activeColor: Theme.of(context).primaryColor,
+                    //           onChanged: (int value) => installments(value),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     PriceCard(
                       buttonText: 'Finalizar Pedido',
                       onPressed: () {
                         if (formKey.currentState.validate()) {
                           formKey.currentState.save();
-                          print(creditCard.toString());
-                          print('enviar');
+
                           checkoutManager.checkout(
+                              installments: _group,
                               creditCard: creditCard,
                               onStockFail: (e) {
                                 Navigator.of(context).popUntil(

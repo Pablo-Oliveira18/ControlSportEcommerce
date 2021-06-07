@@ -13,7 +13,8 @@ class CieloPayment {
       nun,
       price,
       String orderId,
-      Usuario usuario}) async {
+      Usuario usuario,
+      int installments}) async {
     try {
       final Map<String, dynamic> dataSale = {
         'merchantOrderId': orderId,
@@ -23,6 +24,7 @@ class CieloPayment {
         'creditCard': creditCard.toJson(),
         'cpf': usuario.cpf,
         'paymentType': 'CreditCard', // tipo de pagamento = credito
+        'installments': installments,
       };
       final HttpsCallable callable =
           functions.httpsCallable('authorizeCreditCard');

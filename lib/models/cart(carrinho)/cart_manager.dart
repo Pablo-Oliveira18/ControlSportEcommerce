@@ -26,6 +26,13 @@ class CartManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  int _installments = 1;
+  int get installments => _installments;
+  set installments(int value) {
+    _installments = value;
+    notifyListeners();
+  }
+
   void updateUser(UserManager userManager) {
     usuario = userManager.usuario;
     productsPrice = 0.0;

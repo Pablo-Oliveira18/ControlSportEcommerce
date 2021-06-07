@@ -26,6 +26,7 @@ class CheckoutManager extends ChangeNotifier {
 
   Future<void> checkout(
       {CreditCard creditCard,
+      int installments,
       Function onStockFail,
       Function onSuccess,
       Function onPayFail}) async {
@@ -38,6 +39,7 @@ class CheckoutManager extends ChangeNotifier {
         price: cartManager.totalPrice,
         orderId: orderId.toString(),
         usuario: cartManager.usuario,
+        installments: cartManager.installments,
       );
       debugPrint('success $payId');
     } catch (e) {
