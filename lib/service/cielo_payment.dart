@@ -20,7 +20,7 @@ class CieloPayment {
         'merchantOrderId': orderId,
         'amount': (price * 100).toInt(),
         'softDescriptor': 'Loja do Daniel',
-        'installments': 1, // parcelamento
+        // 'installments': 1, // parcelamento
         'creditCard': creditCard.toJson(),
         'cpf': usuario.cpf,
         'paymentType': 'CreditCard', // tipo de pagamento = credito
