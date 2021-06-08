@@ -57,6 +57,26 @@ class OrderTile extends StatelessWidget {
               return OrderProductTile(e);
             }).toList(),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Divider(height: 20),
+                Center(child: Text("Endereço de Entrega")),
+                Divider(height: 20),
+                Text(
+                    'Cidade: ${order.address.city}, Estado: ${order.address.state},'),
+                SizedBox(height: 5),
+                Text(
+                    'Rua: ${order.address.street}, N: ${order.address.number}, '),
+                SizedBox(height: 5),
+                Text('Bairro: ${order.address.district}'),
+                SizedBox(height: 5),
+                Text('CEP: ${order.address.zipCode}'),
+              ],
+            ),
+          ),
           if (showControls && order.status != Status.canceled)
             SizedBox(
               height: 50,
@@ -81,6 +101,7 @@ class OrderTile extends StatelessWidget {
                     textColor: Colors.red,
                     child: const Text('Cancelar'),
                   ),
+
                   // FlatButton(
                   //   onPressed: () {
                   //     showDialog(
